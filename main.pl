@@ -242,7 +242,6 @@ solucion_luz_solar(0) :-
 
 % --- Interfaz principal ---
 inicio :-
-  % retractall(known(_, _, _)),
   nl,
   write('Bienvenido al sistema experto para principiantes en manzanos!!'), nl,
   write('--- Acciones ---'), nl,
@@ -251,7 +250,8 @@ inicio :-
   write('2. Control de plagas y enfermedades'), nl,
   write('3. Gestion de riego y luz solar'), nl,
   write('4. Cuidado del suelo'), nl,
-  write('5. Salir'), nl,
+  write('5. Limpiar memoria actual del sistema'), nl,
+  write('6. Salir'), nl,
   write('>>> '),
   leer_opcion.
 
@@ -279,6 +279,11 @@ manejar_opcion(4) :-
   inicio.
 
 manejar_opcion(5) :-
+  retractall(known(_, _, _)),
+  nl, write('Borrando memoria...'), nl,
+  inicio.
+
+manejar_opcion(6) :-
   nl, write('Saliendo... Adios!'), nl.
 
 manejar_opcion(_) :-

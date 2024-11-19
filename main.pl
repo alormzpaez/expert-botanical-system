@@ -210,7 +210,69 @@ seco_fruto(X) :- booleanask(seco_fruto, X, 'El fruto esta seco, arrugado o enneg
 fruto_cae_prematuramente(X) :- booleanask(fruto_cae_prematuramente, X, 
   'El fruto cae prematuramente?').
 
+% Variables necesarias tomadas en el flujo de plantar
+plantar_cuento_con(X) :- menuask(plantar_cuento_con, X, [1, 2, 3, 4], 
+  'En este momento, con que cuentas exactamente?', [
+    '1.- Semilla',
+    '2.- Planta comprada en vivero',
+    '3.- Planta lista para pasar a tierra',+
+    '4.- Nada. Quiero empezar'
+  ]).
+experiencia_primerizo(X) :- menuask(experiencia_primerizo, X, [1, 2], 
+  'Como deseas que sea tu experiencia con este primer cultivo?', [
+    '1. Quiero dedicarme fuertemente',
+    '2. No quiero batallar'
+  ]).
+caracteristicas_transplantacion(X) :- menuask(caracteristicas_transplantacion, X, [1, 2],
+  'Vas a hacer una transplantacion (pasar de una maceta a terreno fijo)?', [
+    '1. Si, viene en una maceta',
+    '2. No, la planta no venia con maceta'
+  ]).
+planta_comprada_vivero(X) :- booleanask(planta_comprada_vivero, X, 
+  'La planta de la maceta fue comprada en un vivero').
+tipo_suelo(X) :- menuask(tipo_suelo, X, [1, 2, 3, 4], 
+  'Como es el tipo de suelo?', [
+    '1. Tiene porosidad',
+    '2. Es arcilloso',
+    '3. Es arenoso'
+  ]).
+semilla_supermercado(X) :- booleanask(semilla_supermercado, X, 'Obtuviste las semillas en manzanas de supermercado').
+maceta_capacidad_correcta(X) :- booleanask(maceta_capacidad_correcta, X, 'Tienes una maceta de, al menos, 50 litros de capacidad').
+
 % Flujos 
+% Flujo plantar
+flujo_plantar :-
+  write('Para recomendarte los mejores consejos sobre como plantar, necesito preguntar algunas cosas:'), nl, nl,
+  solucion_plaga_enfermedad(X),
+  nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
+  write('* CON RESPECTO A PLAGA/ENFERMEDAD: '), nl,
+  mensaje_solucion_plaga_enfermedad,
+  nl, write('Es todo por este flujo'), nl, nl.
+
+solucion_conseguir_semilla(1) :-
+  plantar_cuento_con(4),
+  experiencia_primerizo(2).
+solucion_conseguir_semilla(2) :-
+  plantar_cuento_con(4),
+  experiencia_primerizo(1).
+
+solucion_estatus_semilla(1) :-
+  plantar_cuento_con(2).
+solucion_estatus_semilla(1) :-
+  plantar_cuento_con(3),
+  caracteristicas_transplantacion(1),
+  planta_comprada_vivero(si).
+solucion_estatus_semilla(1) :-
+  plantar_cuento_con(3),
+  caracteristicas_transplantacion(2),
+  planta_comprada_vivero(si).
+solucion_estatus_semilla(1) :-
+  solucion_conseguir_semilla(1).
+solucion_estatus_semilla(2) :-
+  plantar_cuento_con(1).
+solucion_estatus_semilla(2) :-
+  solucion_conseguir_semilla(2).
+
 % Flujo Riego/luz solar
 flujo_riego_luz_solar :-
   write('Para recomendarte los mejores consejos en riego y luz solar, necesito preguntar algunas cosas:'), nl, nl,
@@ -600,7 +662,7 @@ inicio :-
   write('Bienvenido al sistema experto para principiantes en manzanos!!'), nl,
   write('--- Acciones ---'), nl,
   write('Introduce un numero para:'), nl,
-  write('1. Cultivo'), nl,
+  write('1. Plantar'), nl,
   write('2. Control de plagas y enfermedades'), nl,
   write('3. Gestion de riego y luz solar'), nl,
   write('4. Cuidado del suelo'), nl,
@@ -616,7 +678,8 @@ leer_opcion :-
 
 % --- Manejar la opción del usuario ---
 manejar_opcion(1) :-
-  nl, write('Seleccionaste: Cultivo'), nl,
+  nl, write('Seleccionaste: Plantar'), nl,
+  flujo_plantar,
   inicio.
 
 manejar_opcion(2) :-

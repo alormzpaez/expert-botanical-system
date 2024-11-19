@@ -25,18 +25,27 @@ ask(A, V):-
   asserta(known(S, A, V)),
   S == si.
 
-booleanask(A, V):- 
+booleanask(A, V, Question):- 
   known(si, A, V),
   !.  
-booleanask(A, V):- 
+booleanask(A, V, Question):- 
   known(si, A, _),
   !, 
   fail. 
-booleanask(A, V):-
-  format('~w? (si/no): ', [A]),
+booleanask(A, V, Question):-
+  nl, write(Question), nl,
+  write('[si,no] >>> '),
   read(S),
-  (S == si ; S == no),
+  check_boolval(S, A, V, Question),
   save_booleanask(S, A, V).
+
+check_boolval(X, A, V, Question) :- 
+  (X == si ; X == no), 
+  !. 
+check_boolval(X, A, V, Question) :- 
+  write(X), write(' no es una opcion disponible. Intenta nuevamente.'), nl,  
+  booleanask(A, V, Question).
+
 save_booleanask(S, A, V) :-
   S == V,
   asserta(known(si, A, S)).
@@ -46,32 +55,39 @@ save_booleanask(S, A, V) :-
   !,
   fail.
 
-% menuask(rango_temperatura, 2, [...])
-
-menuask(A, V, MenuList) :- 
+menuask(A, V, MenuList, Question, Options) :- 
   known(si, A, V),  % succeed if true 
   !.  % stop looking  
-menuask(A, V, MenuList) :- 
+menuask(A, V, MenuList, Question, Options) :- 
   known(_, A, V),  % fail if false 
   !, 
   fail. 
-menuask(A, V, MenuList) :- 
+menuask(A, V, MenuList, Question, Options) :- 
   multivalued(A),  
   known(si, A, V2),
   V \== V2,
   !,
   fail.
-menuask(A, V, MenuList) :- 
+menuask(A, V, MenuList, Question, Options) :- 
   multivalued(A),  
   known(si, A, V2),
   V == V2,
   !.
-menuask(A, V, MenuList) :- 
-  write('Cual es el valor para '), write(A), write('?'), nl,  
-  write(MenuList), nl,  
+menuask(A, V, MenuList, Question, Options) :- 
+  nl, write(Question), nl,
+  show_options(Options),
+  write(MenuList),
+  write(' >>> '),
   read(X),  
-  check_val(X, A, V, MenuList),  
+  check_val(X, A, V, MenuList, Question, Options),  
   save_menuask(X, A, V).
+
+show_options([]).
+show_options([Opcion | Resto]) :-
+  write(' '),
+  write(' '),
+  writeln(Opcion),
+  show_options(Resto).
 
 save_menuask(X, A, V) :-
   X == V,
@@ -83,47 +99,61 @@ save_menuask(X, A, V) :-
   !,
   fail.
 
-check_val(X, A, V, MenuList) :- 
+check_val(X, A, V, MenuList, Question, Options) :- 
   member(X, MenuList), 
   !. 
-check_val(X, A, V, MenuList) :- 
+check_val(X, A, V, MenuList, Question, Options) :- 
   write(X), write(' no es una opcion disponible. Intenta nuevamente.'), nl,  
-  menuask(A, V, MenuList).
+  menuask(A, V, MenuList, Question, Options).
 
 % Peticiones necesarias
 
-sequedad_tierra(X) :- booleanask(sequedad_tierra, X).
-acumulacion_despues_riego(X) :- booleanask(acumulacion_despues_riego, X).
-suelo_humedo(X) :- booleanask(suelo_humedo, X).
-soporte(X) :- menuask(soporte, X, [suelo, maceta]). % maceta o suelo
+sequedad_tierra(X) :- booleanask(sequedad_tierra, X,
+  'Observa que la tierra alrededor presenta signos de sequedad en este momento?').
+acumulacion_despues_riego(X) :- booleanask(acumulacion_despues_riego, X,
+  'El agua tiende a acumularse despues del riego?').
+suelo_humedo(X) :- booleanask(suelo_humedo, X,
+  'Has notado que, cuando riegas, el suelo tiende a sentirse muy humedo al tacto?').
+soporte(X) :- menuask(soporte, X, [suelo, maceta], 
+  'En que tipo de soporte esta la planta?',
+  [
+    '- En maceta',
+    '- En suelo directamente'
+  ]).
 
 rango_temperatura(X) :-
-  menuask(rango_temperatura, X, [1, 2, 3, 4, 5, 6]).
-% 1: Muy frio - menos de 0 grados
-% 2: Frío - entre 0 y 15 grados
-% 3: Templado - entre 15 y 25 grados
-% 4: Cálido - entre 25 y 35 grados
-% 5: Muy caliente - entre 35 y 40 grados
-% 6: Extremadamente caliente - mas de 40 grados
+  menuask(rango_temperatura, X, [1, 2, 3, 4, 5, 6],
+  'En este momento, cual es el rango de temperatura promedio actual?', [
+    '1: Muy frio (menos de 0 grados)',
+    '2: Frio (entre 0 y 15 grados)',
+    '3: Templado (entre 15 y 25 grados)',
+    '4: Calido (entre 25 y 35 grados)',
+    '5: Muy caliente (entre 35 y 40 grados)',
+    '6: Extremadamente caliente (mas de 40 grados)'
+  ]).
 
 riego(X) :-
-  menuask(riego, X, [1, 2, 3, 4, 5, 6, 7]).
-% 1. No he regado en absoluto (0 veces)
-% 2. 1 vez
-% 3. 2 veces
-% 4. 3 veces
-% 5. 4 veces
-% 6. 5 veces
-% 7.  Más de 5 veces
+  menuask(riego, X, [1, 2, 3, 4, 5, 6, 7],
+  'En la semana actual (que va del lunes a domingo), cuantas veces has regado la planta?', [
+    '1. No he regado en absoluto (0 veces)',
+    '2. 1 vez',
+    '3. 2 veces',
+    '4. 3 veces',
+    '5. 4 veces',
+    '6. 5 veces',
+    '7. Mas de 5 veces'
+  ]).
 
 rango_horas_luz_solar(X) :-
-  menuask(rango_horas_luz_solar, X, [1, 2, 3, 4, 5, 6]).
-% 1. Menos de 2 horas
-% 2. 2 a 4 horas
-% 3. 4 a 6 horas
-% 4. 6 a 8 horas
-% 5. 8 a 10 horas
-% 6. Más de 10 horas
+  menuask(rango_horas_luz_solar, X, [1, 2, 3, 4, 5, 6],
+  'Cuantas horas de sol directo esta recibiendo tu planta?', [
+    '1. Menos de 2 horas',
+    '2. 2 a 4 horas',
+    '3. 4 a 6 horas',
+    '4. 6 a 8 horas',
+    '5. 8 a 10 horas',
+    '6. Mas de 10 horas'
+  ]).
 
 % Flujos riego/luz solar
 flujo_riego_luz_solar :-
@@ -132,11 +162,11 @@ flujo_riego_luz_solar :-
   solucion_encharcamiento(Y),
   solucion_luz_solar(Z),
   nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
-  write('* Con respecto a riego: '), nl,
+  write('* CON RESPECTO A RIEGO: '), nl,
   mensaje_solucion_riego, nl,
-  write('* Con respecto a encharcamiento: '), nl,
+  write('* CON RESPECTO A ENCHARCAMIENTO: '), nl,
   mensaje_solucion_encharcamiento, nl,
-  write('* Con respecto a luz solar: '), nl,
+  write('* CON RESPECTO A LUZ SOLAR: '), nl,
   mensaje_solucion_luz_solar,
   nl, write('Es todo por este flujo'), nl, nl.
 
@@ -151,7 +181,7 @@ mensaje_solucion_riego :-
   write('En tiempo de frio, se recomienda un manzano se riegue, por lo menos, 2 veces a la semana. Por lo tanto, elige 2 dias de la semana para regarlo.'), nl.
 mensaje_solucion_riego :-
   solucion_riego(4),
-  write('En tiempo de frio, se recomienda un manzano se riegue, por lo menos, 2 veces a la semana. Por lo tanto, riega una vez más en lo que queda de la semana.'), nl.
+  write('En tiempo de frio, se recomienda un manzano se riegue, por lo menos, 2 veces a la semana. Por lo tanto, riega una vez mas en lo que queda de la semana.'), nl.
 mensaje_solucion_riego :-
   solucion_riego(5),
   write('En tiempo de frio, se recomienda un manzano se riegue, por lo menos, 2 veces a la semana. Por lo tanto, ya no es necesario que riegues mas el manzano.'), nl.
@@ -280,7 +310,7 @@ manejar_opcion(4) :-
 
 manejar_opcion(5) :-
   retractall(known(_, _, _)),
-  nl, write('Borrando memoria...'), nl,
+  nl, write('Borrando memoria... Hecho'), nl,
   inicio.
 
 manejar_opcion(6) :-

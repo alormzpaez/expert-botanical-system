@@ -5,6 +5,10 @@ multivalued(soporte).
 multivalued(rango_temperatura).
 multivalued(riego).
 multivalued(rango_horas_luz_solar).
+multivalued(area_malformacion).
+multivalued(caracteristicas_manchas_hojas).
+multivalued(color_hojas).
+multivalued(caracteristicas_flores).
 
 ask(A, V):- 
   known(si, A, V),
@@ -106,8 +110,8 @@ check_val(X, A, V, MenuList, Question, Options) :-
   write(X), write(' no es una opcion disponible. Intenta nuevamente.'), nl,  
   menuask(A, V, MenuList, Question, Options).
 
-% Peticiones necesarias
-
+% Variables necesarias
+% Variables necesarias tomadas en riego y luz solar
 sequedad_tierra(X) :- booleanask(sequedad_tierra, X,
   'Observa que la tierra alrededor presenta signos de sequedad en este momento?').
 acumulacion_despues_riego(X) :- booleanask(acumulacion_despues_riego, X,
@@ -120,7 +124,6 @@ soporte(X) :- menuask(soporte, X, [suelo, maceta],
     '- En maceta',
     '- En suelo directamente'
   ]).
-
 rango_temperatura(X) :-
   menuask(rango_temperatura, X, [1, 2, 3, 4, 5, 6],
   'En este momento, cual es el rango de temperatura promedio actual?', [
@@ -131,7 +134,6 @@ rango_temperatura(X) :-
     '5: Muy caliente (entre 35 y 40 grados)',
     '6: Extremadamente caliente (mas de 40 grados)'
   ]).
-
 riego(X) :-
   menuask(riego, X, [1, 2, 3, 4, 5, 6, 7],
   'En la semana actual (que va del lunes a domingo), cuantas veces has regado la planta?', [
@@ -143,7 +145,6 @@ riego(X) :-
     '6. 5 veces',
     '7. Mas de 5 veces'
   ]).
-
 rango_horas_luz_solar(X) :-
   menuask(rango_horas_luz_solar, X, [1, 2, 3, 4, 5, 6],
   'Cuantas horas de sol directo esta recibiendo tu planta?', [
@@ -155,7 +156,62 @@ rango_horas_luz_solar(X) :-
     '6. Mas de 10 horas'
   ]).
 
-% Flujos riego/luz solar
+% Variables necesarias tomadas en plagas y enfermedades
+malformaciones(X) :- booleanask(malformaciones, X, 'Las hojas o el fruto estas deformadas o presentan malformaciones?').
+area_malformacion(X) :- menuask(area_malformacion, X, [
+    hojas,
+    ramas,
+    flores,
+    frutos
+  ], 'Que parte exactamente del manzano presenta algun sintoma o malformacion?', [
+    '- Hojas',
+    '- Ramas',
+    '- Flores',
+    '- Frutos'
+  ]).
+manchas_hojas(X) :- booleanask(manchas_hojas, X, 'Las hojas presentan manchas?').
+caracteristicas_manchas_hojas(X) :- menuask(caracteristicas_manchas_hojas, X, [1, 2, 3],
+  'Como lucen las manchas?', [
+    '1. Son manchas negras',
+    '2. Son manchas marrones y circulares',
+    '3. No aplica'
+  ]).
+polvo_hojas(X) :- booleanask(polvo_hojas, X, 'Las hojas presentan polvillo blanco?').
+hojas_secas(X) :- booleanask(hojas_secas, X, 'Las hojas estan secas o acartonadas?').
+enrollamiento_hojas(X) :- booleanask(enrollamiento_hojas, X, 'Las hojas tienen enrollamiento?').
+color_hojas(X) :- menuask(color_hojas, X, [
+  marron,
+  amarillo,
+  ninguno
+], 'Cual es el color predominante de las hojas del manzano?', [
+  '- Marron',
+  '- Amarillo',
+  '- Ninguno de los anteriores'
+]).
+hojas_caen_prematuramente(X) :- booleanask(hojas_caen_prematuramente, X, 'Las hojas tienden a caer prematuramente?').
+manchas_ramas(X) :- booleanask(manchas_ramas, X, 'Las ramas tienen manchas visibles?').
+manchas_corteza(X) :- booleanask(manchas_corteza, X, 'Las manchas estan en la corteza?').
+ramas_secas(X) :- booleanask(ramas_secas, X, 'Las ramas estan secas o parecen muertas?').
+sustancia_blanca_en_ramas(X) :- booleanask(sustancia_blanca_en_ramas, X, 'Hay una sustancia blanca algodonosa en las ramas?').
+caracteristicas_flores(X) :- menuask(caracteristicas_flores, X, [1, 2, 3], 
+  'Como lucen las flores en este momento?', [
+    '1. Ennegrecidas o marchitas en su totalidad',
+    '2. Estan simplemente secas',
+    '3. No aplica'
+  ]).
+manchas_fruto(X) :- booleanask(manchas_fruto, X, 'El fruto tiene manchas visibles?').
+manchas_marrones_fruto(X) :- booleanask(manchas_marrones_fruto, X, 'Las manchas son marrones?').
+podrido_fruto(X) :- booleanask(podrido_fruto, X, 'La fruta se reblandece o se pudre?').
+grietas_fruto(X) :- booleanask(grietas_fruto, X, 'Hay grietas o costras en el fruto?').
+manchas_larvas_fruto(X) :- booleanask(manchas_larvas_fruto, X, 
+  'Las manchas estan acompañadas de larvas en el interior del fruto').
+dano_pulpa(X) :- booleanask(dano_pulpa, X, 'La pulpa del fruto esta dañada?').
+seco_fruto(X) :- booleanask(seco_fruto, X, 'El fruto esta seco, arrugado o ennegrecido?').
+fruto_cae_prematuramente(X) :- booleanask(fruto_cae_prematuramente, X, 
+  'El fruto cae prematuramente?').
+
+% Flujos 
+% Flujo Riego/luz solar
 flujo_riego_luz_solar :-
   write('Para recomendarte los mejores consejos en riego y luz solar, necesito preguntar algunas cosas:'), nl, nl,
   solucion_riego(X),
@@ -267,6 +323,274 @@ solucion_luz_solar(0) :-
   !,
   fail.
 
+% Flujo plagas y enfermedades
+flujo_plagas_enfermedades :-
+  write('Para recomendarte los mejores consejos sobre el control de plagas y enfermedades, necesito preguntar algunas cosas:'), nl, nl,
+  solucion_plaga_enfermedad(X),
+  nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
+  write('* CON RESPECTO A PLAGA/ENFERMEDAD: '), nl,
+  mensaje_solucion_plaga_enfermedad,
+  nl, write('Es todo por este flujo'), nl, nl.
+
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(moteado),
+  write('Es probable que tu manzano tenga la enfermedad moteado (Venturia inaequalis).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar fungicidas preventivos como mancozeb o captan.'), nl,
+  write('- Podar ramas infectadas y destruirlas.'), nl,
+  write('- Usar variedades resistentes, como Liberty o Enterprise.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Comun en manzanos susceptibles como Golden Delicious.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1 temporada'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(antracnosis),
+  write('Es probable que tu manzano tenga la enfermedad antracnosis (Colletotrichum coccodes).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar fungicidas como azoxistrobina o mancozeb.'), nl,
+  write('- Mejorar el drenaje y evitar el exceso de riego.'), nl,
+  write('- Podar ramas infectadas.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Afecta principalmente a manzanos en climas humedos.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 meses.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(oidio),
+  write('Es probable que tu manzano tenga la enfermedad oidio (Podosphaera leucotricha).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar fungicidas como azufre micronizado o miclobutanil.'), nl,
+  write('- Podar y eliminar brotes infectados.'), nl,
+  write('- Mejorar la ventilación del árbol.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- General, aunque afecta mas en climas calidos y secos.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 2-4 semanas.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(fuego_bacteriano),
+  write('Es probable que tu manzano tenga la enfermedad fuego bacteriano (Erwinia amylovora).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Podar partes infectadas y desinfectar herramientas.'), nl,
+  write('- Usar bactericidas como oxitetraciclina.'), nl,
+  write('- Evitar heridas en el árbol durante la temporada de crecimiento.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Afecta a todas las variedades, pero algunas como Granny Smith son mas resistentes.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 temporadas, dependiendo de la gravedad.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(psila),
+  write('Es probable que tu manzano tenga la plaga psila (Cacopsylla pyri).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar aceite mineral en yemas durante el invierno.'), nl,
+  write('- Usar insecticidas especificos como abamectina o piretroides en primavera.'), nl,
+  write('- Introducir control biologico con depredadores naturales como Anthocoris nemoralis.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Ataca principalmente a manzanos y perales.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 meses si se controla a tiempo.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(carpocapsa),
+  write('Es probable que tu manzano tenga la plaga Carpocapsa (Cydia).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Colocar trampas de feromonas para monitorear y capturar adultos.'), nl,
+  write('- Aplicar insecticidas específicos como spinosad o lufenuron.'), nl,
+  write('- Usar biocontrol con virus de la granulosis (Cydia pomonella granulovirus).'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Principalmente afecta a variedades de manzanos dulces.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 ciclos de aplicacion (2-4 semanas por ciclo).'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(mosca_fruta),
+  write('Es probable que tu manzano tenga la plaga mosca de la fruta (Ceratitis capitata).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Uso de trampas con atrayentes (proteinas hidrolizadas o feromonas).'), nl,
+  write('- Aplicacion de insecticidas como spinosad o lambda-cialotrina.'), nl,
+  write('- Recolectar y destruir frutos infectados para evitar reinfestaciones.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- No solo afecta a varias variedades del manzano, sino tambien a otras frutas.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 3-4 semanas.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(piojo_san_jose),
+  write('Es probable que tu manzano tenga la plaga piojo de san jose (Quadrasipidotus perniciosus).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar aceite mineral en invierno.'), nl,
+  write('- Usar insecticidas como clorpirifos o acefato en primavera.'), nl,
+  write('- Introducir enemigos naturales como Encarsia perniciosi.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- General, afecta a varios tipos de frutales, incluido el manzano.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 meses con tratamientos adecuados.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(arana_roja),
+  write('Es probable que tu manzano tenga la plaga araña roja (Panonychus ulmi).'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar acaricidas especificos como abamectina o fenpiroximato.'), nl,
+  write('- Mejorar el riego y la humedad para reducir la proliferacion.'), nl,
+  write('- Introducir control biologico con acaros depredadores como Phytoseiulus persimilis.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- General, afecta a todos los manzanos, especialmente en climas secos.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 2-3 semanas.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(piojo_harinoso),
+  write('Es probable que tu manzano tenga la plaga piojo harinoso (Planococcus citri)'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Aplicar aceite mineral y jabon potasico.'), nl,
+  write('- Usar insecticidas sistemicos como imidacloprid.'), nl,
+  write('- Introducir control biologico con Cryptolaemus montrouzieri (escarabajo depredador).'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- General, aunque las variedades mas vigorosas suelen resistir mejor.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 meses.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(pulgon_lanigero),
+  write('Es probable que tu manzano tenga la plaga pulgon lanigero (Eriosoma lanigerum)'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Podar ramas afectadas y quemarlas.'), nl, 
+  write('- Aplicar aceite mineral y jabon potasico.'), nl, 
+  write('- Usar enemigos naturales como Aphelinus mali.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- Ataca principalmente a variedades de manzanos de zonas templadas.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 1-2 meses.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(palomilla_marron),
+  write('Es probable que tu manzano tenga la plaga palomilla marron de la manzana (Epiphyas postvittana)'), nl, nl,
+  write('* CON RESPECTO A TRATAMIENTO:'), nl,
+  write('- Monitorear con trampas de feromonas.'), nl, 
+  write('- Aplicar insecticidas específicos como spinosad.'), nl, 
+  write('- Recolectar hojas y frutos dañados.'), nl, nl,
+  write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
+  write('- General, pero más común en climas templados.'), nl, nl,
+  write('* CON RESPECTO A RECUPERACION:'), nl,
+  write('- 3-4 semanas.'), nl.
+mensaje_solucion_plaga_enfermedad :-
+  solucion_plaga_enfermedad(_),
+  write('Probablemente no hay plagas o enfermedades en tu planta'), nl.
+solucion_plaga_enfermedad(moteado) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(si),
+  caracteristicas_manchas_hojas(1).
+solucion_plaga_enfermedad(antracnosis) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(si),
+  caracteristicas_manchas_hojas(2).
+solucion_plaga_enfermedad(oidio) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(si).
+solucion_plaga_enfermedad(psila) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(no),
+  hojas_secas(si).
+solucion_plaga_enfermedad(psila) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(no),
+  hojas_secas(si).
+solucion_plaga_enfermedad(palomilla_marron) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(no),
+  hojas_secas(no),
+  enrollamiento_hojas(si).
+solucion_plaga_enfermedad(arana_roja) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(no),
+  hojas_secas(no),
+  enrollamiento_hojas(no),
+  color_hojas(marron),
+  hojas_caen_prematuramente(si).
+solucion_plaga_enfermedad(piojo_harinoso) :-
+  malformaciones(si),
+  area_malformacion(hojas),
+  manchas_hojas(no),
+  polvo_hojas(no),
+  hojas_secas(no),
+  enrollamiento_hojas(no),
+  color_hojas(amarillo).
+solucion_plaga_enfermedad(antracnosis) :-
+  malformaciones(si),
+  area_malformacion(ramas),
+  manchas_ramas(si),
+  manchas_corteza(si).
+solucion_plaga_enfermedad(piojo_san_jose) :-
+  malformaciones(si),
+  area_malformacion(ramas),
+  manchas_ramas(no),
+  ramas_secas(si).
+solucion_plaga_enfermedad(pulgon_lanigero) :-
+  malformaciones(si),
+  area_malformacion(ramas),
+  manchas_ramas(no),
+  ramas_secas(no),
+  sustancia_blanca_en_ramas(si).
+solucion_plaga_enfermedad(fuego_bacteriano) :-
+  malformaciones(si),
+  area_malformacion(flores),
+  caracteristicas_flores(1).
+solucion_plaga_enfermedad(psila) :-
+  malformaciones(si),
+  area_malformacion(flores),
+  caracteristicas_flores(2).
+solucion_plaga_enfermedad(mosca_fruta) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(si),
+  manchas_marrones_fruto(si),
+  podrido_fruto(si).
+solucion_plaga_enfermedad(moteado) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(si),
+  manchas_marrones_fruto(si),
+  podrido_fruto(no),
+  grietas_fruto(si).
+solucion_plaga_enfermedad(mosca_fruta) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(si),
+  manchas_marrones_fruto(no),
+  manchas_larvas_fruto(si).
+solucion_plaga_enfermedad(carpocapsa) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(no),
+  dano_pulpa(si).
+solucion_plaga_enfermedad(fuego_bacteriano) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(no),
+  dano_pulpa(no),
+  seco_fruto(si).
+solucion_plaga_enfermedad(palomilla_marron) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(no),
+  dano_pulpa(no),
+  seco_fruto(no),
+  fruto_cae_prematuramente(si),
+  hojas_caen_prematuramente(si).
+solucion_plaga_enfermedad(moteado) :-
+  malformaciones(si),
+  area_malformacion(frutos),
+  manchas_fruto(no),
+  dano_pulpa(no),
+  seco_fruto(no),
+  fruto_cae_prematuramente(si),
+  hojas_caen_prematuramente(no).
+solucion_plaga_enfermedad(0) :-
+  !.
+
 
 % Base de conocimiento
 
@@ -297,6 +621,7 @@ manejar_opcion(1) :-
 
 manejar_opcion(2) :-
   nl, write('Seleccionaste: Control de plagas y enfermedades'), nl,
+  flujo_plagas_enfermedades,
   inicio.
 
 manejar_opcion(3) :-

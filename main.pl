@@ -215,7 +215,7 @@ manchas_marrones_fruto(X) :- booleanask(manchas_marrones_fruto, X, 'Las manchas 
 podrido_fruto(X) :- booleanask(podrido_fruto, X, 'La fruta se reblandece o se pudre?').
 grietas_fruto(X) :- booleanask(grietas_fruto, X, 'Hay grietas o costras en el fruto?').
 manchas_larvas_fruto(X) :- booleanask(manchas_larvas_fruto, X, 
-  'Las manchas estan acompañadas de larvas en el interior del fruto').
+  'Las manchas estan acompaniadas de larvas en el interior del fruto').
 dano_pulpa(X) :- booleanask(dano_pulpa, X, 'La pulpa del fruto esta daniada?').
 seco_fruto(X) :- booleanask(seco_fruto, X, 'El fruto esta seco, arrugado o ennegrecido?').
 fruto_cae_prematuramente(X) :- booleanask(fruto_cae_prematuramente, X, 
@@ -253,11 +253,11 @@ maceta_capacidad_correcta(X) :- booleanask(maceta_capacidad_correcta, X, 'Tienes
 
 % Variables necesarias para el flujo de cuidado de suelo
 tiempo_despues_de_transplantacion(X) :- booleanask(tiempo_despues_de_transplantacion, X, 
-  'Ha pasado al menos 1 mes desde que se transplantó el manzano?').
+  'Ha pasado al menos 1 mes desde que se transplanto el manzano?').
 uso_frecuente_fertilizantes(X) :- booleanask(uso_frecuente_fertilizantes, X, 
   'Has usado fertilizantes constantemente en la zona de tierra?').
 historial_contaminacion_suelo(X) :- booleanask(historial_contaminacion_suelo, X, 
-  'El suelo ha tenido un historial de contaminación o plagas persistentes? ').
+  'El suelo ha tenido un historial de contaminacion o plagas persistentes? ').
 tipo_fertilizante(X) :- menuask(tipo_fertilizante, X, [1, 2, 3], 
   'Si deseas utilizar algun fertilizante, que tipo de fertilizantes consideras usar?', [
     '1. Organico',
@@ -270,8 +270,8 @@ profundidad_correcta_suelo(X) :- menuask(profundidad_correcta_suelo, X, [1, 2, 3
     '2. No',
     '3. No se'
   ]).
-drenaje_deficiente_suelo(X) :- booleanask(drenaje_deficiente_suelo, X, 'El suelo tiene problemas de compactación o drenaje deficiente?').
-extremo_drenaje_deficiente_suelo(X) :- booleanask(extremo_drenaje_deficiente_suelo, X, 'El drenaje o compactación es extremadamente deficiente?').
+drenaje_deficiente_suelo(X) :- booleanask(drenaje_deficiente_suelo, X, 'El suelo tiene problemas de compactacion o drenaje deficiente?').
+extremo_drenaje_deficiente_suelo(X) :- booleanask(extremo_drenaje_deficiente_suelo, X, 'El drenaje o compactacion es extremadamente deficiente?').
 extremo_arcilloso_suelo(X) :- booleanask(extremo_arcilloso_suelo, X, 'El suelo es extremadamente arcilloso?').
 ph_suelo(X) :- menuask(ph_suelo, X, [1, 2, 3, 4], 'Reconoces si el tipo de suelo es:', [
   '1. Acido',
@@ -280,7 +280,7 @@ ph_suelo(X) :- menuask(ph_suelo, X, [1, 2, 3, 4], 'Reconoces si el tipo de suelo
   '4. Desconocido, pero quiero conocerlo'
 ]).
 deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3], 
-  'Suponiendo que no cuentas con instrumentos de medicion de pH (de ser así, usalos y omite esto). Toma dos muestras del suelo para evitar alteraciones. En la primer muestra coloca jugo de limón, y si reacciona, es alcalino. En la segunda muestra coloca vinagre, y si reacciona, es ácido. Ahora indica el tipo de suelo:', [
+  'Suponiendo que no cuentas con instrumentos de medicion de pH (de ser asi, usalos y omite esto). Toma dos muestras del suelo para evitar alteraciones. En la primer muestra coloca jugo de limon, y si reacciona, es alcalino. En la segunda muestra coloca vinagre, y si reacciona, es acido. Ahora indica el tipo de suelo:', [
     '1. Acido',
     '2. Neutro',
     '3. Alcalino',
@@ -288,9 +288,9 @@ deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3],
   ]).
 tratamientos_suelo_alcalino(X) :- menuask(tratamientos_suelo_alcalino, X, [1, 2, 3, 4], 
   'Para suelos alcalinos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
-    '1. Aplicación de azufre elemental',
-    '2. Aplicación de fertilizantes ácidos',
-    '3. Aplicación de materia orgánica',
+    '1. Aplicacion de azufre elemental',
+    '2. Aplicacion de fertilizantes acidos',
+    '3. Aplicacion de materia organica',
     '4. Ninguno accesible'
   ]).
 fertilizante_acido(X) :- menuask(fertilizante_acido, X, [1, 2, 3], 
@@ -300,10 +300,10 @@ fertilizante_acido(X) :- menuask(fertilizante_acido, X, [1, 2, 3],
     '3. Ninguno accesible'
   ]).
 tratamientos_suelo_acido(X) :- menuask(tratamientos_suelo_acido, X, [1, 2, 3, 4], 
-  'Para suelos ácidos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
+  'Para suelos acidos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
     '1. Uso de cal viva o cal apagada',
-    '2. Uso de ceniza de leña sana',
-    '3. Uso de carbonato cálcico',
+    '2. Uso de ceniza de lenia sana',
+    '3. Uso de carbonato calcico',
     '4. Ninguno accesible'
   ]).
 
@@ -334,13 +334,13 @@ flujo_cuidado_suelo :-
   mensaje_solucion_tratamiento_suelo_alcalino,
   mensaje_solucion_tratamiento_advertencias,
   mensaje_solucion_instrucciones_suelo,
-  nl, write('Valida los niveles de nutrientes en el suelo y en caso de ser necesario apoya al aumento del nutriente requerido para la siembra de manzanos con un plan de fertilización adecuado o en su defecto evite el uso de fertilizantes para evitar que los nutrientes sean excesivos.'), nl,
+  nl, write('Valida los niveles de nutrientes en el suelo y en caso de ser necesario apoya al aumento del nutriente requerido para la siembra de manzanos con un plan de fertilizacion adecuado o en su defecto evite el uso de fertilizantes para evitar que los nutrientes sean excesivos.'), nl,
   write('Es todo por este flujo'), nl, nl.
 
 mensaje_solucion_adaptacion_al_suelo :-
   solucion_adaptacion_al_suelo(1),
   write('* CON RESPECTO A INFORMACION DE ADAPTACION AL SUELO: '), nl,
-  write('Si la raíz no se adapta al lugar de plantación por, al menos, un mes, puedes correr el riesgo de quemar la raíz. No es un buen lugar para plantar'), nl, nl.
+  write('Si la raiz no se adapta al lugar de plantacion por, al menos, un mes, puedes correr el riesgo de quemar la raiz. No es un buen lugar para plantar'), nl, nl.
 mensaje_solucion_adaptacion_al_suelo :-
   !.  
 
@@ -358,11 +358,11 @@ mensaje_solucion_accesible_sembrar :-
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(1),
   write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
-  write('Continúe con un plan de fertilización natural.'), nl, nl.
+  write('Continue con un plan de fertilizacion natural.'), nl, nl.
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(2),
   write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
-  write('Asegúrese de no exceder las dosis recomendadas.'), nl, nl.
+  write('Asegurese de no exceder las dosis recomendadas.'), nl, nl.
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(3),
   write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
@@ -381,41 +381,41 @@ mensaje_solucion_profundidad_suelo :-
 mensaje_solucion_drenaje_deficiente_suelo :-
   solucion_drenaje_deficiente_suelo(1),
   write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
-  write('No es recomendable plantar manzanos en la zona debido a que el drenaje deficiente podría causar asfixia a las raíces y ocasionar pudrición.'), nl, nl.
+  write('No es recomendable plantar manzanos en la zona debido a que el drenaje deficiente podria causar asfixia a las raices y ocasionar pudricion.'), nl, nl.
 mensaje_solucion_drenaje_deficiente_suelo :-
   solucion_drenaje_deficiente_suelo(2),
   write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
-  write('Recomendación: Realizar trabajos de aireación o drenaje.'), nl, nl.
+  write('Recomendacion: Realizar trabajos de aireacion o drenaje.'), nl, nl.
 mensaje_solucion_drenaje_deficiente_suelo :-
   !.  
 
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(1),
   write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
-  write('Suelo de drenaje rápido. Asegúrese de una fertilización adecuada.'), nl, nl.
+  write('Suelo de drenaje rapido. Asegurese de una fertilizacion adecuada.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(2),
   write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
-  write('Suelo pesado. Considere mejorar la aireación.'), nl, nl.
+  write('Suelo pesado. Considere mejorar la aireacion.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(3),
   write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
-  write('Es un suelo óptimo.'), nl, nl.
+  write('Es un suelo optimo.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   !.  
 
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(1),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
-  write('Es altamente probable que el suelo presente características ácidas.'), nl, nl.
+  write('Es altamente probable que el suelo presente caracteristicas acidas.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(2),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
-  write('Es altamente probable que el suelo presente características neutras.'), nl, nl.
+  write('Es altamente probable que el suelo presente caracteristicas neutras.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(3),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
-  write('Es altamente probable que el suelo presente características alcalinas.'), nl, nl.
+  write('Es altamente probable que el suelo presente caracteristicas alcalinas.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   !.  
 
@@ -426,7 +426,7 @@ mensaje_solucion_tratamiento_suelo_acido :-
 mensaje_solucion_tratamiento_suelo_acido :-
   solucion_tratamiento_suelo_acido(2),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
-  write('Para subir 1 unidad de pH se recomienda utilizar  entre 100 gr y 200 gr por m2 de ceniza de leña sana.'), nl, nl.
+  write('Para subir 1 unidad de pH se recomienda utilizar  entre 100 gr y 200 gr por m2 de ceniza de lenia sana.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_acido :-
   solucion_tratamiento_suelo_acido(3),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
@@ -441,31 +441,31 @@ mensaje_solucion_tratamiento_suelo_alcalino :-
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(2),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
-  write(' Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg de nitrato de amonio por m2 o para diluir en agua de riego 1kg por litro. Al finalizar riegue el área para ayudar a que el nitrato se integre en el suelo'), nl, nl.
+  write(' Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg de nitrato de amonio por m2 o para diluir en agua de riego 1kg por litro. Al finalizar riegue el area para ayudar a que el nitrato se integre en el suelo'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(3),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
-  write('Se recomienda la aplicación de estiércol compostado. Esta aplicación es Ideal para suelos sueltos y con buen drenaje. Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg a 4kg por m2 de estiércol. Los diferentes tipos de estiércol tienen distintos niveles de nutrientes.'), nl, nl.
+  write('Se recomienda la aplicacion de estiercol compostado. Esta aplicacion es Ideal para suelos sueltos y con buen drenaje. Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg a 4kg por m2 de estiercol. Los diferentes tipos de estiercol tienen distintos niveles de nutrientes.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(4),
   write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
-  write('El uso de azufre elemental se considera más lento que otros fertilizantes pero efectivo. Para bajar 1 unidad de pH se recomienda utilizar entre 0.5 kg y 1 kg por m2 de Azufre.'), nl, nl.
+  write('El uso de azufre elemental se considera mas lento que otros fertilizantes pero efectivo. Para bajar 1 unidad de pH se recomienda utilizar entre 0.5 kg y 1 kg por m2 de Azufre.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   !.  
 
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(1),
   write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
-  write('- Adecuado para situaciones donde se requiere una acción rápida, pero debe aplicarse con precaución para evitar sobrepasar el nivel de pH deseado.'), nl,
-  write('- En caso de usar cal viva es importante no mezclar con agua, ya  que produce una reacción exotérmica y corrosiva.'), nl, nl.
+  write('- Adecuado para situaciones donde se requiere una accion rapida, pero debe aplicarse con precaucion para evitar sobrepasar el nivel de pH deseado.'), nl,
+  write('- En caso de usar cal viva es importante no mezclar con agua, ya  que produce una reaccion exotermica y corrosiva.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(2),
   write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- Ideal para suelos compactos.'), nl,
-  write('- Actúa mas rápido que el azufre pero persiste durante menos tiempo. '), nl,
-  write('- Evite aplicar en días calurosos o secos.'), nl,
-  write('- Es necesario vigilar los niveles de salinidad para evitar daños a los cultivos.'), nl,
-  write('- Su uso excesivo puede llevar a la acumulación de hierro.'), nl, nl.
+  write('- Actua mas rapido que el azufre pero persiste durante menos tiempo. '), nl,
+  write('- Evite aplicar en dias calurosos o secos.'), nl,
+  write('- Es necesario vigilar los niveles de salinidad para evitar danios a los cultivos.'), nl,
+  write('- Su uso excesivo puede llevar a la acumulacion de hierro.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(3),
   write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
@@ -475,12 +475,12 @@ mensaje_solucion_tratamiento_advertencias :-
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(4),
   write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
-  write('- Asegúrese de que el estiércol se encuentra bien compostado para reducir riesgos de patógenos.'), nl,
-  write('- No debe excederse la dosis ya que podría provocar problemas de sanidad o contaminación.'), nl, nl.
+  write('- Asegurese de que el estiercol se encuentra bien compostado para reducir riesgos de patogenos.'), nl,
+  write('- No debe excederse la dosis ya que podria provocar problemas de sanidad o contaminacion.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(5),
   write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
-  write('- De no manejarse adecuadamente la conductividad eléctrica del suelo puede aumentar debido al incremento de sales solubles.'), nl, nl.
+  write('- De no manejarse adecuadamente la conductividad electrica del suelo puede aumentar debido al incremento de sales solubles.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   !.  
 
@@ -680,7 +680,7 @@ flujo_plantar :-
 mensaje_solucion_conseguir_semilla :-
   solucion_conseguir_semilla(1),
   write('* CON RESPECTO A INFORMACION DE COMO CONSEGUIR LA PLANTA: '), nl,
-  write('Compra una planta de manzano en un vivero cercano, ya que suelen venir injertadas y son más fáciles de cuidar. Busca viveros en paginas web o redes sociales.'), nl, nl.
+  write('Compra una planta de manzano en un vivero cercano, ya que suelen venir injertadas y son mas faciles de cuidar. Busca viveros en paginas web o redes sociales.'), nl, nl.
 mensaje_solucion_conseguir_semilla :-
   solucion_conseguir_semilla(2),
   write('* CON RESPECTO A INFORMACION DE COMO CONSEGUIR LA PLANTA: '), nl,
@@ -695,7 +695,7 @@ mensaje_solucion_estatus_semilla :-
 mensaje_solucion_estatus_semilla :-
   solucion_estatus_semilla(2),
   write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
-  write('Ten en cuenta que, si plantas desde semilla, hay menos posibilidades de exito y tardaras mas de un año en poder trasladarla a tierra. Ademas, se recomienda empezar el proceso utilizando una maceta.'), nl, nl.
+  write('Ten en cuenta que, si plantas desde semilla, hay menos posibilidades de exito y tardaras mas de un anio en poder trasladarla a tierra. Ademas, se recomienda empezar el proceso utilizando una maceta.'), nl, nl.
 mensaje_solucion_estatus_semilla :-
   solucion_estatus_semilla(3),
   write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
@@ -737,36 +737,36 @@ mensaje_solucion_tipo_suelo :-
 mensaje_solucion_instrucciones_plantar :-
   solucion_instrucciones_plantar(3),
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
-  write('1.- Coloca las semillas en un papel ligeramente húmedo y ponlas en el refrigerador durante un mes.'), nl,
-  write('2.- Después de un mes, cada semilla debe tener un pequeño brote.'), nl,
-  write('3.- Para plantar el brote, usa un palito de madera pequeño para hacer un hoyo de al menos 10 cm en una maceta con tierra (suficiente para cubrir la semilla del brote).'), nl,
-  write('4.- Coloca la semilla en el hoyo y cúbrela con tierra, dejando el brote fuera.'), nl,
+  write('1.- Coloca las semillas en un papel ligeramente humedo y ponlas en el refrigerador durante un mes.'), nl,
+  write('2.- Despues de un mes, cada semilla debe tener un pequenio brote.'), nl,
+  write('3.- Para plantar el brote, usa un palito de madera pequenio para hacer un hoyo de al menos 10 cm en una maceta con tierra (suficiente para cubrir la semilla del brote).'), nl,
+  write('4.- Coloca la semilla en el hoyo y cubrela con tierra, dejando el brote fuera.'), nl,
   write('La planta puede tardar unos 5 meses en crecer. Se recomienda plantar cada semilla con brote en su propia maceta. Una vez que la planta crezca, puede trasladarse a un terreno fijo para continuar su cultivo.'), nl, nl.
 mensaje_solucion_instrucciones_plantar :-
   solucion_instrucciones_plantar(1),
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
-  write('La planta tiene las caracteristicas adecuadas para crecer bien en este lugar. Antes de comenzar, asegúrate de que el área donde plantaras tenga suficiente espacio. Se recomienda que esté a una distancia de 5 a 8 metros de otras plantas:'), nl,
-  write('1.- Marca con una varilla el lugar donde irá el árbol y usa una azada para remover la hierba.'), nl,
+  write('La planta tiene las caracteristicas adecuadas para crecer bien en este lugar. Antes de comenzar, asegurate de que el area donde plantaras tenga suficiente espacio. Se recomienda que este a una distancia de 5 a 8 metros de otras plantas:'), nl,
+  write('1.- Marca con una varilla el lugar donde ira el arbol y usa una azada para remover la hierba.'), nl,
   write('2.- Con una pala, termina de retirar la hierba.'), nl,
-  write('3.- Usa un pico para comenzar a cavar el hoyo. Continúa con la pala. El hoyo debe tener aproximadamente 50 cm de profundidad (esto puede variar según la profundidad de las raíces de la planta).'), nl,
-  write('4.- Saca la planta de la bolsa y déjala en agua durante 15 minutos (preferentemente en una cubeta).'), nl,
-  write('5.- Mientras la planta está en el agua, puedes colocar un poco de abono en el hoyo, como una mezcla de turba y humus.'), nl,
-  write('6.- Después de 15 minutos, saca la planta del agua e introdúcela en el hoyo.'), nl,
-  write('7.- Cubre las raíces con tierra y un poco de abono. Nota: Asegúrate de no cubrir el injerto del tronco. Pisa suavemente la tierra para asegurar la profundidad correcta.'), nl,
-  write('8.- Una vez cubierto el hoyo, vierte el agua que usaste para remojar la planta en el área del hoyo.'), nl,
+  write('3.- Usa un pico para comenzar a cavar el hoyo. Continua con la pala. El hoyo debe tener aproximadamente 50 cm de profundidad (esto puede variar segun la profundidad de las raices de la planta).'), nl,
+  write('4.- Saca la planta de la bolsa y dejala en agua durante 15 minutos (preferentemente en una cubeta).'), nl,
+  write('5.- Mientras la planta esta en el agua, puedes colocar un poco de abono en el hoyo, como una mezcla de turba y humus.'), nl,
+  write('6.- Despues de 15 minutos, saca la planta del agua e introducela en el hoyo.'), nl,
+  write('7.- Cubre las raices con tierra y un poco de abono. Nota: Asegurate de no cubrir el injerto del tronco. Pisa suavemente la tierra para asegurar la profundidad correcta.'), nl,
+  write('8.- Una vez cubierto el hoyo, vierte el agua que usaste para remojar la planta en el area del hoyo.'), nl,
   write('9.- Si es necesario, coloca una estaca junto al tronco para evitar que el viento lo derribe. Usa un mazo para enterrar la estaca y amarra el tronco a ella con una cinta.'), nl, nl.
 mensaje_solucion_instrucciones_plantar :-
   solucion_instrucciones_plantar(2),
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
-  write('No esperes resultados perfectos debido a las caracteristicas de la planta. Antes de comenzar, asegúrate de que el área donde plantaras tenga suficiente espacio. Se recomienda que esté a una distancia de 5 a 8 metros de otras plantas:'), nl,
-  write('1.- Marca con una varilla el lugar donde irá el árbol y usa una azada para remover la hierba.'), nl,
+  write('No esperes resultados perfectos debido a las caracteristicas de la planta. Antes de comenzar, asegurate de que el area donde plantaras tenga suficiente espacio. Se recomienda que este a una distancia de 5 a 8 metros de otras plantas:'), nl,
+  write('1.- Marca con una varilla el lugar donde ira el arbol y usa una azada para remover la hierba.'), nl,
   write('2.- Con una pala, termina de retirar la hierba.'), nl,
-  write('3.- Usa un pico para comenzar a cavar el hoyo. Continúa con la pala. El hoyo debe tener aproximadamente 50 cm de profundidad (esto puede variar según la profundidad de las raíces de la planta).'), nl,
-  write('4.- Saca la planta de la bolsa y déjala en agua durante 15 minutos (preferentemente en una cubeta).'), nl,
-  write('5.- Mientras la planta está en el agua, puedes colocar un poco de abono en el hoyo, como una mezcla de turba y humus.'), nl,
-  write('6.- Después de 15 minutos, saca la planta del agua e introdúcela en el hoyo.'), nl,
-  write('7.- Cubre las raíces con tierra y un poco de abono. Nota: Asegúrate de no cubrir el injerto del tronco. Pisa suavemente la tierra para asegurar la profundidad correcta.'), nl,
-  write('8.- Una vez cubierto el hoyo, vierte el agua que usaste para remojar la planta en el área del hoyo.'), nl,
+  write('3.- Usa un pico para comenzar a cavar el hoyo. Continua con la pala. El hoyo debe tener aproximadamente 50 cm de profundidad (esto puede variar segun la profundidad de las raices de la planta).'), nl,
+  write('4.- Saca la planta de la bolsa y dejala en agua durante 15 minutos (preferentemente en una cubeta).'), nl,
+  write('5.- Mientras la planta esta en el agua, puedes colocar un poco de abono en el hoyo, como una mezcla de turba y humus.'), nl,
+  write('6.- Despues de 15 minutos, saca la planta del agua e introducela en el hoyo.'), nl,
+  write('7.- Cubre las raices con tierra y un poco de abono. Nota: Asegurate de no cubrir el injerto del tronco. Pisa suavemente la tierra para asegurar la profundidad correcta.'), nl,
+  write('8.- Una vez cubierto el hoyo, vierte el agua que usaste para remojar la planta en el area del hoyo.'), nl,
   write('9.- Si es necesario, coloca una estaca junto al tronco para evitar que el viento lo derribe. Usa un mazo para enterrar la estaca y amarra el tronco a ella con una cinta.'), nl, nl.
 mensaje_solucion_instrucciones_plantar :-
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
@@ -905,7 +905,7 @@ mensaje_solucion_encharcamiento :-
   write('Sin informacion'), nl.
 mensaje_solucion_luz_solar :- 
   solucion_luz_solar(1),
-  write('Está todo correcto.'), nl.
+  write('Esta todo correcto.'), nl.
 mensaje_solucion_luz_solar :- 
   solucion_luz_solar(2),
   write('Tu planta esta recibiendo un exceso de luz solar. Aunque no es tan problematico, reconsidera reubicar tu planta en un sitio donde reciba aproximadamente 8 horas de luz solar.'), nl.
@@ -1006,7 +1006,7 @@ mensaje_solucion_plaga_enfermedad :-
   write('* CON RESPECTO A TRATAMIENTO:'), nl,
   write('- Aplicar fungicidas como azufre micronizado o miclobutanil.'), nl,
   write('- Podar y eliminar brotes infectados.'), nl,
-  write('- Mejorar la ventilación del árbol.'), nl, nl,
+  write('- Mejorar la ventilacion del arbol.'), nl, nl,
   write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
   write('- General, aunque afecta mas en climas calidos y secos.'), nl, nl,
   write('* CON RESPECTO A RECUPERACION:'), nl,
@@ -1017,7 +1017,7 @@ mensaje_solucion_plaga_enfermedad :-
   write('* CON RESPECTO A TRATAMIENTO:'), nl,
   write('- Podar partes infectadas y desinfectar herramientas.'), nl,
   write('- Usar bactericidas como oxitetraciclina.'), nl,
-  write('- Evitar heridas en el árbol durante la temporada de crecimiento.'), nl, nl,
+  write('- Evitar heridas en el arbol durante la temporada de crecimiento.'), nl, nl,
   write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
   write('- Afecta a todas las variedades, pero algunas como Granny Smith son mas resistentes.'), nl, nl,
   write('* CON RESPECTO A RECUPERACION:'), nl,
@@ -1038,7 +1038,7 @@ mensaje_solucion_plaga_enfermedad :-
   write('Es probable que tu manzano tenga la plaga Carpocapsa (Cydia).'), nl, nl,
   write('* CON RESPECTO A TRATAMIENTO:'), nl,
   write('- Colocar trampas de feromonas para monitorear y capturar adultos.'), nl,
-  write('- Aplicar insecticidas específicos como spinosad o lufenuron.'), nl,
+  write('- Aplicar insecticidas especificos como spinosad o lufenuron.'), nl,
   write('- Usar biocontrol con virus de la granulosis (Cydia pomonella granulovirus).'), nl, nl,
   write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
   write('- Principalmente afecta a variedades de manzanos dulces.'), nl, nl,
@@ -1068,7 +1068,7 @@ mensaje_solucion_plaga_enfermedad :-
   write('- 1-2 meses con tratamientos adecuados.'), nl.
 mensaje_solucion_plaga_enfermedad :-
   solucion_plaga_enfermedad(arana_roja),
-  write('Es probable que tu manzano tenga la plaga araña roja (Panonychus ulmi).'), nl, nl,
+  write('Es probable que tu manzano tenga la plaga arania roja (Panonychus ulmi).'), nl, nl,
   write('* CON RESPECTO A TRATAMIENTO:'), nl,
   write('- Aplicar acaricidas especificos como abamectina o fenpiroximato.'), nl,
   write('- Mejorar el riego y la humedad para reducir la proliferacion.'), nl,
@@ -1104,10 +1104,10 @@ mensaje_solucion_plaga_enfermedad :-
   write('Es probable que tu manzano tenga la plaga palomilla marron de la manzana (Epiphyas postvittana)'), nl, nl,
   write('* CON RESPECTO A TRATAMIENTO:'), nl,
   write('- Monitorear con trampas de feromonas.'), nl, 
-  write('- Aplicar insecticidas específicos como spinosad.'), nl, 
-  write('- Recolectar hojas y frutos dañados.'), nl, nl,
+  write('- Aplicar insecticidas especificos como spinosad.'), nl, 
+  write('- Recolectar hojas y frutos daniados.'), nl, nl,
   write('* CON RESPECTO A ESPECIFICIDAD:'), nl,
-  write('- General, pero más común en climas templados.'), nl, nl,
+  write('- General, pero mas comun en climas templados.'), nl, nl,
   write('* CON RESPECTO A RECUPERACION:'), nl,
   write('- 3-4 semanas.'), nl.
 mensaje_solucion_plaga_enfermedad :-
@@ -1255,12 +1255,12 @@ inicio :-
   write('>>> '),
   leer_opcion.
 
-% --- Leer la opción del usuario ---
+% --- Leer la opcion del usuario ---
 leer_opcion :-
   read(Opcion),
   manejar_opcion(Opcion).
 
-% --- Manejar la opción del usuario ---
+% --- Manejar la opcion del usuario ---
 manejar_opcion(1) :-
   nl, write('Seleccionaste: Plantacion'), nl,
   flujo_plantar,

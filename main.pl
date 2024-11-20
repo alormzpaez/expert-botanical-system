@@ -243,7 +243,8 @@ maceta_capacidad_correcta(X) :- booleanask(maceta_capacidad_correcta, X, 'Tienes
 % Flujo plantar
 flujo_plantar :-
   write('Para recomendarte los mejores consejos sobre como plantar, necesito preguntar algunas cosas:'), nl, nl,
-  solucion_plaga_enfermedad(X),
+  solucion_conseguir_semilla(X),
+  solucion_estatus_semilla(Y),
   nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
   write('* CON RESPECTO A PLAGA/ENFERMEDAD: '), nl,
   mensaje_solucion_plaga_enfermedad,
@@ -272,6 +273,56 @@ solucion_estatus_semilla(2) :-
   plantar_cuento_con(1).
 solucion_estatus_semilla(2) :-
   solucion_conseguir_semilla(2).
+
+solucion_inicio_riego(1) :-
+  solucion_estatus_semilla(1),
+  (rango_temperatura(4) ; rango_temperatura(5) ; rango_temperatura(6)). % caluroso
+solucion_inicio_riego(1) :-
+  (solucion_instrucciones(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
+  (rango_temperatura(4) ; rango_temperatura(5) ; rango_temperatura(6)). % caluroso
+solucion_inicio_riego(2) :-
+  solucion_estatus_semilla(1),
+  (rango_temperatura(1) ; rango_temperatura(2)). % frio
+solucion_inicio_riego(2) :-
+  (solucion_instrucciones(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
+  (rango_temperatura(1) ; rango_temperatura(2)). % frio
+
+solucion_tipo_suelo(1) :-
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
+  tipo_suelo(2).
+solucion_tipo_suelo(1) :-
+  (solucion_instrucciones(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
+  tipo_suelo(2).
+solucion_tipo_suelo(2) :-
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
+  tipo_suelo(3).
+solucion_tipo_suelo(2) :-
+  (solucion_instrucciones(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
+  tipo_suelo(3).
+
+solucion_instrucciones(1) :-
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)),
+  tipo_suelo(1).
+solucion_instrucciones(2) :-
+  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)),
+  \+ tipo_suelo(1).
+solucion_instrucciones(3) :-
+  solucion_semilla_maceta(1).
+solucion_instrucciones(3) :-
+  \+ solucion_semilla_maceta(1).
+
+% Util para informacion con respecto a semilla supermercado
+solucion_estatus_semilla_supermercado(1) :-
+  solucion_estatus_semilla(2),
+  semilla_supermercado(si).
+
+solucion_semilla_maceta(1) :-
+  solucion_estatus_semilla(2),
+  (semilla_supermercado(si) ; semilla_supermercado(no)),
+  maceta_capacidad_correcta(no).
+
 
 % Flujo Riego/luz solar
 flujo_riego_luz_solar :-

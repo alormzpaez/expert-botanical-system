@@ -252,17 +252,17 @@ flujo_plantar :-
   solucion_estatus_semilla(Y),
   solucion_inicio_riego(Z),
   solucion_tipo_suelo(A),
-  solucion_instrucciones_plantar(B),
   solucion_estatus_semilla_supermercado(C),
   solucion_semilla_maceta(D),
+  solucion_instrucciones_plantar(B),
   nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
   mensaje_solucion_conseguir_semilla,
   mensaje_solucion_estatus_semilla,
   mensaje_solucion_inicio_riego,
   mensaje_solucion_tipo_suelo,
-  mensaje_solucion_instrucciones_plantar,
   mensaje_solucion_estatus_semilla_supermercado,
   mensaje_solucion_semilla_maceta,
+  mensaje_solucion_instrucciones_plantar,
   nl, write('Es todo por este flujo'), nl, nl.
 
 mensaje_solucion_conseguir_semilla :-
@@ -279,11 +279,15 @@ mensaje_solucion_conseguir_semilla :-
 mensaje_solucion_estatus_semilla :-
   solucion_estatus_semilla(1),
   write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
-  write('Esta planta es injertada, lo que la hace mas resistente a plagas y permite un crecimiento mas rapido. Solo necesitas plantarla en tierra.'), nl, nl.
+  write('Esta planta es injertada, lo que la hace mas resistente a plagas y permite un crecimiento mas rapido.'), nl, nl.
 mensaje_solucion_estatus_semilla :-
   solucion_estatus_semilla(2),
   write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
   write('Ten en cuenta que, si plantas desde semilla, hay menos posibilidades de exito y tardaras mas de un año en poder trasladarla a tierra. Ademas, se recomienda empezar el proceso utilizando una maceta.'), nl, nl.
+mensaje_solucion_estatus_semilla :-
+  solucion_estatus_semilla(3),
+  write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
+  write('Si la planta no proviene de un vivero, no se puede garantizar un crecimiento rapido. Sin embargo, es una mejor opcion que iniciar desde semillas.'), nl, nl.
 mensaje_solucion_estatus_semilla :-
   write('* CON RESPECTO A INFORMACION DE ESTATUS DE PLANTA: '), nl,
   write('Sin informacion.'), nl, nl.
@@ -305,7 +309,7 @@ mensaje_solucion_inicio_riego :-
   write('Puedes plantar, pero asegurate de no regar en exceso, ya que la manzana no tolera el exceso de humedad. Aun asi, la humedad debe mantenerse entre un 70% y 80% para evitar la deshidratacion. Para mas informacion de riego, dirigete a la opcion del menu principal: 3. Gestion de riego y luz solar.'), nl, nl.
 mensaje_solucion_inicio_riego :-
   write('* CON RESPECTO A INFORMACION INICIAL DE RIEGO: '), nl,
-  write('Sin informacion.'), nl, nl.
+  write('Sin informacion. Para mas informacion de riego, dirigete a la opcion del menu principal: 3. Gestion de riego y luz solar.'), nl, nl.
 
 mensaje_solucion_tipo_suelo :-
   solucion_tipo_suelo(1),
@@ -316,9 +320,16 @@ mensaje_solucion_tipo_suelo :-
   write('* CON RESPECTO A INFORMACION DE TIPO DE SUELO: '), nl,
   write('No se recomienda plantar en este tipo de suelo, ya que suele ser poco rico en nutrientes y no retiene bien la humedad.'), nl, nl.
 mensaje_solucion_tipo_suelo :-
-  write('* CON RESPECTO A INFORMACION DE TIPO DE SUELO: '), nl,
-  write('Sin informacion.'), nl, nl.
+  !.
 
+mensaje_solucion_instrucciones_plantar :-
+  solucion_instrucciones_plantar(3),
+  write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
+  write('1.- Coloca las semillas en un papel ligeramente húmedo y ponlas en el refrigerador durante un mes.'), nl,
+  write('2.- Después de un mes, cada semilla debe tener un pequeño brote.'), nl,
+  write('3.- Para plantar el brote, usa un palito de madera pequeño para hacer un hoyo de al menos 10 cm en una maceta con tierra (suficiente para cubrir la semilla del brote).'), nl,
+  write('4.- Coloca la semilla en el hoyo y cúbrela con tierra, dejando el brote fuera.'), nl,
+  write('La planta puede tardar unos 5 meses en crecer. Se recomienda plantar cada semilla con brote en su propia maceta. Una vez que la planta crezca, puede trasladarse a un terreno fijo para continuar su cultivo.'), nl, nl.
 mensaje_solucion_instrucciones_plantar :-
   solucion_instrucciones_plantar(1),
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
@@ -346,18 +357,11 @@ mensaje_solucion_instrucciones_plantar :-
   write('8.- Una vez cubierto el hoyo, vierte el agua que usaste para remojar la planta en el área del hoyo.'), nl,
   write('9.- Si es necesario, coloca una estaca junto al tronco para evitar que el viento lo derribe. Usa un mazo para enterrar la estaca y amarra el tronco a ella con una cinta.'), nl, nl.
 mensaje_solucion_instrucciones_plantar :-
-  solucion_instrucciones_plantar(3),
-  write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
-  write('1.- Coloca las semillas en un papel ligeramente húmedo y ponlas en el refrigerador durante un mes.'), nl,
-  write('2.- Después de un mes, cada semilla debe tener un pequeño brote.'), nl,
-  write('3.- Para plantar el brote, usa un palito de madera pequeño para hacer un hoyo de al menos 10 cm en una maceta con tierra (suficiente para cubrir la semilla del brote).'), nl,
-  write('4.- Coloca la semilla en el hoyo y cúbrela con tierra, dejando el brote fuera.'), nl,
-  write('La planta puede tardar unos 5 meses en crecer. Se recomienda plantar cada semilla con brote en su propia maceta. Una vez que la planta crezca, puede trasladarse a un terreno fijo para continuar su cultivo.'), nl, nl.
-mensaje_solucion_instrucciones_plantar :-
   write('* CON RESPECTO A INFORMACION DE COMO PLANTAR: '), nl,
   write('Sin informacion.'), nl, nl.
 
 mensaje_solucion_semilla_maceta :-
+  solucion_semilla_maceta(1),
   write('* CON RESPECTO A INFORMACION ADICIONAL DE MACETA: '), nl,
   write('La recomendacion general para manzanos son macetas de 50 litros de capacidad como minimo'), nl, nl.
 mensaje_solucion_semilla_maceta :-
@@ -389,20 +393,16 @@ solucion_estatus_semilla(2) :-
   plantar_cuento_con(1).
 solucion_estatus_semilla(2) :-
   solucion_conseguir_semilla(2).
+solucion_estatus_semilla(3) :-
+  plantar_cuento_con(3),
+  caracteristicas_transplantacion(1),
+  planta_comprada_vivero(no).
 solucion_estatus_semilla(0) :-
   !.
 
 solucion_inicio_riego(1) :-
-  solucion_estatus_semilla(1),
-  (rango_temperatura(4) ; rango_temperatura(5) ; rango_temperatura(6)). % caluroso
-solucion_inicio_riego(1) :-
-  (solucion_instrucciones_plantar(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
   (rango_temperatura(4) ; rango_temperatura(5) ; rango_temperatura(6)). % caluroso
 solucion_inicio_riego(2) :-
-  solucion_estatus_semilla(1),
-  (rango_temperatura(1) ; rango_temperatura(2)). % frio
-solucion_inicio_riego(2) :-
-  (solucion_instrucciones_plantar(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
   (rango_temperatura(1) ; rango_temperatura(2)). % frio
 solucion_inicio_riego(0) :-
   !.
@@ -410,43 +410,36 @@ solucion_inicio_riego(0) :-
 solucion_tipo_suelo(1) :-
   (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
   tipo_suelo(2).
-solucion_tipo_suelo(1) :-
-  (solucion_instrucciones_plantar(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
-  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
-  tipo_suelo(2).
 solucion_tipo_suelo(2) :-
-  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
-  tipo_suelo(3).
-solucion_tipo_suelo(2) :-
-  (solucion_instrucciones_plantar(3) ; solucion_estatus_semilla(1) ; planta_comprada_vivero(no)),
   (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)), % temperatura agradable
   tipo_suelo(3).
 solucion_tipo_suelo(0) :-
   !.
 
+solucion_instrucciones_plantar(3) :-
+  solucion_estatus_semilla(2).
 solucion_instrucciones_plantar(1) :-
-  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)),
   tipo_suelo(1).
 solucion_instrucciones_plantar(2) :-
-  (solucion_inicio_riego(1) ; solucion_inicio_riego(2) ; rango_temperatura(3)),
   \+ tipo_suelo(1).
-solucion_instrucciones_plantar(3) :-
-  solucion_semilla_maceta(1).
-solucion_instrucciones_plantar(3) :-
-  \+ solucion_semilla_maceta(1).
 solucion_instrucciones_plantar(0) :-
   !.
 
 % Util para informacion con respecto a semilla supermercado
+solucion_estatus_semilla_supermercado(0) :-
+  \+ (plantar_cuento_con(1) ; solucion_estatus_semilla(2)),
+  !.
 solucion_estatus_semilla_supermercado(1) :-
-  solucion_estatus_semilla(2),
+  (plantar_cuento_con(1) ; solucion_estatus_semilla(2)),
   semilla_supermercado(si).
 solucion_estatus_semilla_supermercado(0) :-
   !.
 
+solucion_semilla_maceta(0) :-
+  \+ (plantar_cuento_con(1) ; solucion_estatus_semilla(2)),
+  !.
 solucion_semilla_maceta(1) :-
-  solucion_estatus_semilla(2),
-  (semilla_supermercado(si) ; semilla_supermercado(no)),
+  (plantar_cuento_con(1) ; solucion_estatus_semilla(2)),
   maceta_capacidad_correcta(no).
 solucion_semilla_maceta(0) :-
   !.
@@ -841,7 +834,7 @@ inicio :-
   write('Bienvenido al sistema experto para principiantes en manzanos!!'), nl,
   write('--- Acciones ---'), nl,
   write('Introduce un numero para:'), nl,
-  write('1. Plantar'), nl,
+  write('1. Plantacion'), nl,
   write('2. Control de plagas y enfermedades'), nl,
   write('3. Gestion de riego y luz solar'), nl,
   write('4. Cuidado del suelo'), nl,
@@ -857,7 +850,7 @@ leer_opcion :-
 
 % --- Manejar la opción del usuario ---
 manejar_opcion(1) :-
-  nl, write('Seleccionaste: Plantar'), nl,
+  nl, write('Seleccionaste: Plantacion'), nl,
   flujo_plantar,
   inicio.
 

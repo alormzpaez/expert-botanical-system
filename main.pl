@@ -157,7 +157,7 @@ rango_horas_luz_solar(X) :-
   ]).
 
 % Variables necesarias tomadas en plagas y enfermedades
-malformaciones(X) :- booleanask(malformaciones, X, 'Las hojas o el fruto estas deformadas o presentan malformaciones?').
+malformaciones(X) :- booleanask(malformaciones, X, 'Las hojas o el fruto estan deformadas o presentan malformaciones?').
 area_malformacion(X) :- menuask(area_malformacion, X, [
     hojas,
     ramas,
@@ -205,7 +205,7 @@ podrido_fruto(X) :- booleanask(podrido_fruto, X, 'La fruta se reblandece o se pu
 grietas_fruto(X) :- booleanask(grietas_fruto, X, 'Hay grietas o costras en el fruto?').
 manchas_larvas_fruto(X) :- booleanask(manchas_larvas_fruto, X, 
   'Las manchas estan acompañadas de larvas en el interior del fruto').
-dano_pulpa(X) :- booleanask(dano_pulpa, X, 'La pulpa del fruto esta dañada?').
+dano_pulpa(X) :- booleanask(dano_pulpa, X, 'La pulpa del fruto esta daniada?').
 seco_fruto(X) :- booleanask(seco_fruto, X, 'El fruto esta seco, arrugado o ennegrecido?').
 fruto_cae_prematuramente(X) :- booleanask(fruto_cae_prematuramente, X, 
   'El fruto cae prematuramente?').

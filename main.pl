@@ -13,6 +13,13 @@ multivalued(plantar_cuento_con).
 multivalued(experiencia_primerizo).
 multivalued(caracteristicas_transplantacion).
 multivalued(tipo_suelo).
+multivalued(tipo_fertilizante).
+multivalued(ph_suelo).
+multivalued(deteccion_ph_suelo).
+multivalued(tratamientos_suelo_alcalino).
+multivalued(fertilizante_acido).
+multivalued(tratamientos_suelo_acido).
+multivalued(profundidad_correcta_suelo).
 
 ask(A, V):- 
   known(si, A, V),
@@ -236,7 +243,7 @@ planta_comprada_vivero(X) :- booleanask(planta_comprada_vivero, X,
   'La planta de la maceta fue comprada en un vivero').
 tipo_suelo(X) :- menuask(tipo_suelo, X, [1, 2, 3, 4], 
   'Como es el tipo de suelo?', [
-    '1. Tiene porosidad',
+    '1. Equilibrado',
     '2. Es arcilloso',
     '3. Es arenoso',
     '4. No aplica'
@@ -244,7 +251,412 @@ tipo_suelo(X) :- menuask(tipo_suelo, X, [1, 2, 3, 4],
 semilla_supermercado(X) :- booleanask(semilla_supermercado, X, 'Obtuviste las semillas en manzanas de supermercado').
 maceta_capacidad_correcta(X) :- booleanask(maceta_capacidad_correcta, X, 'Tienes una maceta de, al menos, 50 litros de capacidad').
 
+% Variables necesarias para el flujo de cuidado de suelo
+tiempo_despues_de_transplantacion(X) :- booleanask(tiempo_despues_de_transplantacion, X, 
+  'Ha pasado al menos 1 mes desde que se transplantó el manzano?').
+uso_frecuente_fertilizantes(X) :- booleanask(uso_frecuente_fertilizantes, X, 
+  'Has usado fertilizantes constantemente en la zona de tierra?').
+historial_contaminacion_suelo(X) :- booleanask(historial_contaminacion_suelo, X, 
+  'El suelo ha tenido un historial de contaminación o plagas persistentes? ').
+tipo_fertilizante(X) :- menuask(tipo_fertilizante, X, [1, 2, 3], 
+  'Si deseas utilizar algun fertilizante, que tipo de fertilizantes consideras usar?', [
+    '1. Organico',
+    '2. Sintetico',
+    '3. Otro'
+  ]).
+profundidad_correcta_suelo(X) :- menuask(profundidad_correcta_suelo, X, [1, 2, 3], 
+  'La profundidad del suelo te permite sembrar tu manzano al menos a 60cm de profundidad?', [
+    '1. Si',
+    '2. No',
+    '3. No se'
+  ]).
+drenaje_deficiente_suelo(X) :- booleanask(drenaje_deficiente_suelo, X, 'El suelo tiene problemas de compactación o drenaje deficiente?').
+extremo_drenaje_deficiente_suelo(X) :- booleanask(extremo_drenaje_deficiente_suelo, X, 'El drenaje o compactación es extremadamente deficiente?').
+extremo_arcilloso_suelo(X) :- booleanask(extremo_arcilloso_suelo, X, 'El suelo es extremadamente arcilloso?').
+ph_suelo(X) :- menuask(ph_suelo, X, [1, 2, 3, 4], 'Reconoces si el tipo de suelo es:', [
+  '1. Acido',
+  '2. Neutro',
+  '3. Alcalino',
+  '4. Desconocido, pero quiero conocerlo'
+]).
+deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3], 
+  'Suponiendo que no cuentas con instrumentos de medicion de pH (de ser así, usalos y omite esto). Toma dos muestras del suelo para evitar alteraciones. En la primer muestra coloca jugo de limón, y si reacciona, es alcalino. En la segunda muestra coloca vinagre, y si reacciona, es ácido. Ahora indica el tipo de suelo:', [
+    '1. Acido',
+    '2. Neutro',
+    '3. Alcalino',
+    '4. No aplica'
+  ]).
+tratamientos_suelo_alcalino(X) :- menuask(tratamientos_suelo_alcalino, X, [1, 2, 3, 4], 
+  'Para suelos alcalinos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
+    '1. Aplicación de azufre elemental',
+    '2. Aplicación de fertilizantes ácidos',
+    '3. Aplicación de materia orgánica',
+    '4. Ninguno accesible'
+  ]).
+fertilizante_acido(X) :- menuask(fertilizante_acido, X, [1, 2, 3], 
+  'Selecciona uno de los sig. fertilizantes a utilizar:', [
+    '1. De sulfato de hierro',
+    '2. De nitrato de amonio',
+    '3. Ninguno accesible'
+  ]).
+tratamientos_suelo_acido(X) :- menuask(tratamientos_suelo_acido, X, [1, 2, 3, 4], 
+  'Para suelos ácidos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
+    '1. Uso de cal viva o cal apagada',
+    '2. Uso de ceniza de leña sana',
+    '3. Uso de carbonato cálcico',
+    '4. Ninguno accesible'
+  ]).
+
 % Flujos 
+% Flujo cuidado suelo
+flujo_cuidado_suelo :-
+  write('Para recomendarte los mejores consejos sobre como cuidar tu suelo, necesito preguntar algunas cosas:'), nl, nl,
+  solucion_adaptacion_al_suelo(X),
+  solucion_accesible_sembrar(Y),
+  solucion_tipo_fertilizante(Z),
+  solucion_profundidad_suelo(A),
+  solucion_drenaje_deficiente_suelo(B),
+  solucion_caracteristicas_suelo(C),
+  solucion_ph_suelo(D),
+  solucion_tratamiento_suelo_acido(E),
+  solucion_tratamiento_suelo_alcalino(F),
+  solucion_tratamiento_advertencias(G),
+  solucion_instrucciones_suelo(H),
+  nl, nl, write('A continuacion, la respuesta del flujo:'), nl, nl,
+  mensaje_solucion_adaptacion_al_suelo,
+  mensaje_solucion_accesible_sembrar,
+  mensaje_solucion_tipo_fertilizante,
+  mensaje_solucion_profundidad_suelo,
+  mensaje_solucion_drenaje_deficiente_suelo,
+  mensaje_solucion_caracteristicas_suelo,
+  mensaje_solucion_ph_suelo,
+  mensaje_solucion_tratamiento_suelo_acido,
+  mensaje_solucion_tratamiento_suelo_alcalino,
+  mensaje_solucion_tratamiento_advertencias,
+  mensaje_solucion_instrucciones_suelo,
+  nl, write('Valida los niveles de nutrientes en el suelo y en caso de ser necesario apoya al aumento del nutriente requerido para la siembra de manzanos con un plan de fertilización adecuado o en su defecto evite el uso de fertilizantes para evitar que los nutrientes sean excesivos.'), nl,
+  write('Es todo por este flujo'), nl, nl.
+
+mensaje_solucion_adaptacion_al_suelo :-
+  solucion_adaptacion_al_suelo(1),
+  write('* CON RESPECTO A INFORMACION DE ADAPTACION AL SUELO: '), nl,
+  write('Si la raíz no se adapta al lugar de plantación por, al menos, un mes, puedes correr el riesgo de quemar la raíz. No es un buen lugar para plantar'), nl, nl.
+mensaje_solucion_adaptacion_al_suelo :-
+  !.  
+
+mensaje_solucion_accesible_sembrar :-
+  solucion_accesible_sembrar(1),
+  write('* CON RESPECTO A INFORMACION DE ACCESIBILIDAD A SEMBRAR: '), nl,
+  write('No se recomienda sembrar en esta zona.'), nl, nl.
+mensaje_solucion_accesible_sembrar :-
+  solucion_accesible_sembrar(2),
+  write('* CON RESPECTO A INFORMACION DE ACCESIBILIDAD A SEMBRAR: '), nl,
+  write('No es recomendable plantar manzanos en la zona debido a la dificultad de la tierra para retener  nutrientes.'), nl, nl.
+mensaje_solucion_accesible_sembrar :-
+  !.  
+
+mensaje_solucion_tipo_fertilizante :-
+  solucion_tipo_fertilizante(1),
+  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  write('Continúe con un plan de fertilización natural.'), nl, nl.
+mensaje_solucion_tipo_fertilizante :-
+  solucion_tipo_fertilizante(2),
+  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  write('Asegúrese de no exceder las dosis recomendadas.'), nl, nl.
+mensaje_solucion_tipo_fertilizante :-
+  solucion_tipo_fertilizante(3),
+  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  write('Considere un plan combinado para maximizar beneficios.'), nl, nl.
+mensaje_solucion_tipo_fertilizante :-
+  !.  
+
+
+mensaje_solucion_profundidad_suelo :-
+  solucion_profundidad_suelo(1),
+  write('* CON RESPECTO A INFORMACION DE PROFUNDIDAD DE SUELO: '), nl,
+  write('Se recomienda validar que la profundidad del suelo sea de al menos 60cm para no limitar el crecimiento de los manzanos.'), nl, nl.
+mensaje_solucion_profundidad_suelo :-
+  !.  
+
+mensaje_solucion_drenaje_deficiente_suelo :-
+  solucion_drenaje_deficiente_suelo(1),
+  write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
+  write('No es recomendable plantar manzanos en la zona debido a que el drenaje deficiente podría causar asfixia a las raíces y ocasionar pudrición.'), nl, nl.
+mensaje_solucion_drenaje_deficiente_suelo :-
+  solucion_drenaje_deficiente_suelo(2),
+  write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
+  write('Recomendación: Realizar trabajos de aireación o drenaje.'), nl, nl.
+mensaje_solucion_drenaje_deficiente_suelo :-
+  !.  
+
+mensaje_solucion_caracteristicas_suelo :-
+  solucion_caracteristicas_suelo(1),
+  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  write('Suelo de drenaje rápido. Asegúrese de una fertilización adecuada.'), nl, nl.
+mensaje_solucion_caracteristicas_suelo :-
+  solucion_caracteristicas_suelo(2),
+  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  write('Suelo pesado. Considere mejorar la aireación.'), nl, nl.
+mensaje_solucion_caracteristicas_suelo :-
+  solucion_caracteristicas_suelo(3),
+  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  write('Es un suelo óptimo.'), nl, nl.
+mensaje_solucion_caracteristicas_suelo :-
+  !.  
+
+mensaje_solucion_ph_suelo :-
+  solucion_ph_suelo(1),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  write('Es altamente probable que el suelo presente características ácidas.'), nl, nl.
+mensaje_solucion_ph_suelo :-
+  solucion_ph_suelo(2),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  write('Es altamente probable que el suelo presente características neutras.'), nl, nl.
+mensaje_solucion_ph_suelo :-
+  solucion_ph_suelo(3),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  write('Es altamente probable que el suelo presente características alcalinas.'), nl, nl.
+mensaje_solucion_ph_suelo :-
+  !.  
+
+mensaje_solucion_tratamiento_suelo_acido :-
+  solucion_tratamiento_suelo_acido(1),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  write('Para subir 1 unidad de pH se recomienda utilizar  entre 300 gr y 500 gr por m2 de cal viva o entre 200gr y 400gr por m2.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_acido :-
+  solucion_tratamiento_suelo_acido(2),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  write('Para subir 1 unidad de pH se recomienda utilizar  entre 100 gr y 200 gr por m2 de ceniza de leña sana.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_acido :-
+  solucion_tratamiento_suelo_acido(3),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  write('Para subir 1 unidad de pH se recomienda utilizar  entre 0.750 kg y 1.250 kg por m2.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_acido :-
+  !.  
+
+mensaje_solucion_tratamiento_suelo_alcalino :-
+  solucion_tratamiento_suelo_alcalino(1),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  write('Para bajar 1 unidad de pH se recomienda utilizar  entre 400 gr y 600 gr de sulfato de hierro por m2 y para diluir en agua de riego 4gr por litro.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_alcalino :-
+  solucion_tratamiento_suelo_alcalino(2),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  write(' Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg de nitrato de amonio por m2 o para diluir en agua de riego 1kg por litro. Al finalizar riegue el área para ayudar a que el nitrato se integre en el suelo'), nl, nl.
+mensaje_solucion_tratamiento_suelo_alcalino :-
+  solucion_tratamiento_suelo_alcalino(3),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  write('Se recomienda la aplicación de estiércol compostado. Esta aplicación es Ideal para suelos sueltos y con buen drenaje. Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg a 4kg por m2 de estiércol. Los diferentes tipos de estiércol tienen distintos niveles de nutrientes.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_alcalino :-
+  solucion_tratamiento_suelo_alcalino(4),
+  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  write('El uso de azufre elemental se considera más lento que otros fertilizantes pero efectivo. Para bajar 1 unidad de pH se recomienda utilizar entre 0.5 kg y 1 kg por m2 de Azufre.'), nl, nl.
+mensaje_solucion_tratamiento_suelo_alcalino :-
+  !.  
+
+mensaje_solucion_tratamiento_advertencias :-
+  solucion_tratamiento_advertencias(1),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  write('- Adecuado para situaciones donde se requiere una acción rápida, pero debe aplicarse con precaución para evitar sobrepasar el nivel de pH deseado.'), nl,
+  write('- En caso de usar cal viva es importante no mezclar con agua, ya  que produce una reacción exotérmica y corrosiva.'), nl, nl.
+mensaje_solucion_tratamiento_advertencias :-
+  solucion_tratamiento_advertencias(2),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  write('- Ideal para suelos compactos.'), nl,
+  write('- Actúa mas rápido que el azufre pero persiste durante menos tiempo. '), nl,
+  write('- Evite aplicar en días calurosos o secos.'), nl,
+  write('- Es necesario vigilar los niveles de salinidad para evitar daños a los cultivos.'), nl,
+  write('- Su uso excesivo puede llevar a la acumulación de hierro.'), nl, nl.
+mensaje_solucion_tratamiento_advertencias :-
+  solucion_tratamiento_advertencias(3),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  write('- No es recomendable su uso en suelos arenosos ya que puede reducir la eficacia del fertilizante.'), nl,
+  write('- Es posible que requieran aplicaciones repetidas'), nl,
+  write('- A largo plazo puede llevar a desequilibrios nutricionales, ya que un pH elevado puede limitar la disponibilidad de otros nutrientes.'), nl, nl.
+mensaje_solucion_tratamiento_advertencias :-
+  solucion_tratamiento_advertencias(4),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  write('- Asegúrese de que el estiércol se encuentra bien compostado para reducir riesgos de patógenos.'), nl,
+  write('- No debe excederse la dosis ya que podría provocar problemas de sanidad o contaminación.'), nl, nl.
+mensaje_solucion_tratamiento_advertencias :-
+  solucion_tratamiento_advertencias(5),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  write('- De no manejarse adecuadamente la conductividad eléctrica del suelo puede aumentar debido al incremento de sales solubles.'), nl, nl.
+mensaje_solucion_tratamiento_advertencias :-
+  !.  
+
+mensaje_solucion_instrucciones_suelo :-
+  solucion_instrucciones_suelo(1),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
+  write('- Introduce la cal en el suelo a una profundidad de 15 a 20 cm y mezcla.'), nl,
+  write('- Advertencia: Recuerda que cualquier enmienda debe ser de forma escalonada y progresiva. Se recomienda verificar el pH del suelo cada 3 o 4 meses.'), nl, nl.
+mensaje_solucion_instrucciones_suelo :-
+  solucion_instrucciones_suelo(2),
+  write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
+  write('- Introduce la cal en el suelo a una profundidad de 15 a 20 cm y mezcla.'), nl,
+  write('- Advertencia: Recuerda que cualquier enmienda debe ser de forma escalonada y progresiva. Se recomienda verificar el pH del suelo cada 3 o 4 meses.'), nl, nl.
+mensaje_solucion_instrucciones_suelo :-
+  !.  
+
+solucion_adaptacion_al_suelo(1) :-
+  tiempo_despues_de_transplantacion(no).
+solucion_adaptacion_al_suelo(0) :-
+  !.
+
+solucion_accesible_sembrar(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_accesible_sembrar(1) :-
+  uso_frecuente_fertilizantes(si),
+  historial_contaminacion_suelo(si).
+solucion_accesible_sembrar(1) :-
+  uso_frecuente_fertilizantes(no),
+  (tipo_fertilizante(1) ; tipo_fertilizante(2) ; tipo_fertilizante(3)),
+  profundidad_correcta_suelo(2).
+solucion_accesible_sembrar(2) :-
+  tipo_suelo(2),
+  extremo_arcilloso_suelo(si).
+solucion_accesible_sembrar(0) :-
+  !.
+
+solucion_tipo_fertilizante(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_tipo_fertilizante(1) :- % organico
+  tipo_fertilizante(1).
+solucion_tipo_fertilizante(2) :- % sintetico
+  tipo_fertilizante(2).
+solucion_tipo_fertilizante(3) :- % otro
+  tipo_fertilizante(3).
+solucion_tipo_fertilizante(0) :-
+  !.
+
+solucion_profundidad_suelo(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_profundidad_suelo(1) :-
+  profundidad_correcta_suelo(3).
+solucion_profundidad_suelo(0) :-
+  !.
+
+solucion_drenaje_deficiente_suelo(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_drenaje_deficiente_suelo(1) :- 
+  drenaje_deficiente_suelo(si),
+  extremo_drenaje_deficiente_suelo(si).
+solucion_drenaje_deficiente_suelo(2) :- 
+  drenaje_deficiente_suelo(si),
+  extremo_drenaje_deficiente_suelo(no).
+solucion_drenaje_deficiente_suelo(0) :-
+  !.
+
+solucion_caracteristicas_suelo(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_caracteristicas_suelo(1) :-
+  tipo_suelo(3).
+solucion_caracteristicas_suelo(2) :-
+  tipo_suelo(2),
+  extremo_arcilloso_suelo(no).
+solucion_caracteristicas_suelo(3) :-
+  tipo_suelo(1).
+solucion_caracteristicas_suelo(0) :-
+  !.
+
+solucion_ph_suelo(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_ph_suelo(1) :- % acido
+  tiempo_despues_de_transplantacion(si),
+  uso_frecuente_fertilizantes(si),
+  historial_contaminacion_suelo(no).
+solucion_ph_suelo(1) :- % acido
+  ph_suelo(1).
+solucion_ph_suelo(2) :- % neutro
+  ph_suelo(2).
+solucion_ph_suelo(3) :- % alcalino
+  ph_suelo(3).
+solucion_ph_suelo(1) :- % acido
+  ph_suelo(4),
+  deteccion_ph_suelo(1).
+solucion_ph_suelo(2) :- % neutro
+  ph_suelo(4),
+  deteccion_ph_suelo(2).
+solucion_ph_suelo(3) :- % alcalino
+  ph_suelo(4),
+  deteccion_ph_suelo(3).
+solucion_ph_suelo(0) :-
+  !.
+
+solucion_tratamiento_suelo_acido(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_tratamiento_suelo_acido(1) :-
+  solucion_ph_suelo(1),
+  tratamientos_suelo_acido(1).
+solucion_tratamiento_suelo_acido(2) :-
+  solucion_ph_suelo(1),
+  tratamientos_suelo_acido(2).
+solucion_tratamiento_suelo_acido(3) :-
+  solucion_ph_suelo(1),
+  tratamientos_suelo_acido(3).
+solucion_tratamiento_suelo_acido(0) :-
+  !.
+
+solucion_tratamiento_suelo_alcalino(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_tratamiento_suelo_alcalino(3) :-
+  solucion_ph_suelo(3),
+  tratamientos_suelo_alcalino(3).
+solucion_tratamiento_suelo_alcalino(4) :-
+  solucion_ph_suelo(3),
+  tratamientos_suelo_alcalino(1).
+solucion_tratamiento_suelo_alcalino(1) :-
+  solucion_ph_suelo(3),
+  tratamientos_suelo_alcalino(2),
+  fertilizante_acido(1).
+solucion_tratamiento_suelo_alcalino(2) :-
+  solucion_ph_suelo(3),
+  tratamientos_suelo_alcalino(2),
+  fertilizante_acido(2).
+solucion_tratamiento_suelo_alcalino(0) :-
+  !.
+
+solucion_tratamiento_advertencias(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_tratamiento_advertencias(1) :-
+  solucion_ph_suelo(1),
+  solucion_tratamiento_suelo_acido(1).
+solucion_tratamiento_advertencias(2) :-
+  solucion_ph_suelo(3),
+  solucion_tratamiento_suelo_alcalino(1).
+solucion_tratamiento_advertencias(3) :-
+  solucion_ph_suelo(3),
+  solucion_tratamiento_suelo_alcalino(2).
+solucion_tratamiento_advertencias(4) :-
+  solucion_ph_suelo(3),
+  solucion_tratamiento_suelo_alcalino(3).
+solucion_tratamiento_advertencias(5) :-
+  solucion_ph_suelo(3),
+  solucion_tratamiento_suelo_alcalino(4).
+solucion_tratamiento_advertencias(0) :-
+  !.
+
+solucion_instrucciones_suelo(0) :-
+  tiempo_despues_de_transplantacion(no),
+  !.
+solucion_instrucciones_suelo(1) :-
+  solucion_ph_suelo(1),
+  (solucion_tratamiento_suelo_acido(1) ; solucion_tratamiento_suelo_acido(2) ; solucion_tratamiento_suelo_acido(3)).
+solucion_instrucciones_suelo(2) :-
+  solucion_ph_suelo(3),
+  (solucion_tratamiento_suelo_alcalino(1) ; solucion_tratamiento_suelo_alcalino(2) ; solucion_tratamiento_suelo_alcalino(3) ; solucion_tratamiento_suelo_alcalino(4)).
+solucion_instrucciones_suelo(0) :-
+  !.
+
+
 % Flujo plantar
 flujo_plantar :-
   write('Para recomendarte los mejores consejos sobre como plantar, necesito preguntar algunas cosas:'), nl, nl,
@@ -866,6 +1278,7 @@ manejar_opcion(3) :-
 
 manejar_opcion(4) :-
   nl, write('Seleccionaste: Cuidado del suelo'), nl,
+  flujo_cuidado_suelo,
   inicio.
 
 manejar_opcion(5) :-

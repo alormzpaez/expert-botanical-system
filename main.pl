@@ -138,12 +138,12 @@ soporte(X) :- menuask(soporte, X, [suelo, maceta],
 rango_temperatura(X) :-
   menuask(rango_temperatura, X, [1, 2, 3, 4, 5, 6],
   'En este momento, cual es el rango de temperatura promedio actual?', [
-    '1: Muy frio (menos de 0 grados)',
-    '2: Frio (entre 0 y 15 grados)',
-    '3: Templado (entre 15 y 25 grados)',
-    '4: Calido (entre 25 y 35 grados)',
-    '5: Muy caliente (entre 35 y 40 grados)',
-    '6: Extremadamente caliente (mas de 40 grados)'
+    '1: Muy frio',
+    '2: Frio',
+    '3: Templado',
+    '4: Calido',
+    '5: Muy caliente',
+    '6: Extremadamente caliente'
   ]).
 riego(X) :-
   menuask(riego, X, [1, 2, 3, 4, 5, 6, 7],

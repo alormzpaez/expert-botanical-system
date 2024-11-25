@@ -279,7 +279,7 @@ ph_suelo(X) :- menuask(ph_suelo, X, [1, 2, 3, 4], 'Reconoces si el tipo de suelo
   '3. Alcalino',
   '4. Desconocido, pero quiero conocerlo'
 ]).
-deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3], 
+deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3, 4], 
   'Suponiendo que no cuentas con instrumentos de medicion de pH (de ser asi, usalos y omite esto). Toma dos muestras del suelo para evitar alteraciones. En la primer muestra coloca jugo de limon, y si reacciona, es alcalino. En la segunda muestra coloca vinagre, y si reacciona, es acido. Ahora indica el tipo de suelo:', [
     '1. Acido',
     '2. Neutro',

@@ -20,6 +20,8 @@ multivalued(tratamientos_suelo_alcalino).
 multivalued(fertilizante_acido).
 multivalued(tratamientos_suelo_acido).
 multivalued(profundidad_correcta_suelo).
+multivalued(tiempo_despues_de_transplantacion).
+multivalued(historial_contaminacion_suelo).
 
 ask(A, V):- 
   known(si, A, V),
@@ -173,19 +175,21 @@ area_malformacion(X) :- menuask(area_malformacion, X, [
     hojas,
     ramas,
     flores,
-    frutos
+    frutos,
+    ninguno
   ], 'Que parte exactamente del manzano presenta algun sintoma o malformacion?', [
     '- Hojas',
     '- Ramas',
     '- Flores',
-    '- Frutos'
+    '- Frutos',
+    '- No se, ninguno de los anteriores'
   ]).
 manchas_hojas(X) :- booleanask(manchas_hojas, X, 'Las hojas presentan manchas?').
 caracteristicas_manchas_hojas(X) :- menuask(caracteristicas_manchas_hojas, X, [1, 2, 3],
   'Como lucen las manchas?', [
     '1. Son manchas negras',
     '2. Son manchas marrones y circulares',
-    '3. No aplica'
+    '3. No se. Ninguna de las anteriores'
   ]).
 polvo_hojas(X) :- booleanask(polvo_hojas, X, 'Las hojas presentan polvillo blanco?').
 hojas_secas(X) :- booleanask(hojas_secas, X, 'Las hojas estan secas o acartonadas?').
@@ -197,7 +201,7 @@ color_hojas(X) :- menuask(color_hojas, X, [
 ], 'Cual es el color predominante de las hojas del manzano?', [
   '- Marron',
   '- Amarillo',
-  '- Ninguno de los anteriores'
+  '- No se. Ninguno de los anteriores'
 ]).
 hojas_caen_prematuramente(X) :- booleanask(hojas_caen_prematuramente, X, 'Las hojas tienden a caer prematuramente?').
 manchas_ramas(X) :- booleanask(manchas_ramas, X, 'Las ramas tienen manchas visibles?').
@@ -208,7 +212,7 @@ caracteristicas_flores(X) :- menuask(caracteristicas_flores, X, [1, 2, 3],
   'Como lucen las flores en este momento?', [
     '1. Ennegrecidas o marchitas en su totalidad',
     '2. Estan simplemente secas',
-    '3. No aplica'
+    '3. No se. Ninguno de los anteriores'
   ]).
 manchas_fruto(X) :- booleanask(manchas_fruto, X, 'El fruto tiene manchas visibles?').
 manchas_marrones_fruto(X) :- booleanask(manchas_marrones_fruto, X, 'Las manchas son marrones?').
@@ -243,26 +247,35 @@ planta_comprada_vivero(X) :- booleanask(planta_comprada_vivero, X,
   'La planta de la maceta fue comprada en un vivero').
 tipo_suelo(X) :- menuask(tipo_suelo, X, [1, 2, 3, 4], 
   'Como es el tipo de suelo?', [
-    '1. Equilibrado',
+    '1. Equilibrado (punto medio entre ambos)',
     '2. Es arcilloso',
     '3. Es arenoso',
-    '4. No aplica'
+    '4. No se'
   ]).
 semilla_supermercado(X) :- booleanask(semilla_supermercado, X, 'Obtuviste las semillas en manzanas de supermercado').
 maceta_capacidad_correcta(X) :- booleanask(maceta_capacidad_correcta, X, 'Tienes una maceta de, al menos, 50 litros de capacidad').
 
 % Variables necesarias para el flujo de cuidado de suelo
-tiempo_despues_de_transplantacion(X) :- booleanask(tiempo_despues_de_transplantacion, X, 
-  'Ha pasado al menos 1 mes desde que se transplanto el manzano?').
+tiempo_despues_de_transplantacion(X) :- menuask(tiempo_despues_de_transplantacion, X, [1, 2, 3],
+  'Ha pasado al menos 1 mes desde que se transplanto el manzano?', [
+    '1. Si',
+    '2. No',
+    '3. No se'
+  ]).
 uso_frecuente_fertilizantes(X) :- booleanask(uso_frecuente_fertilizantes, X, 
   'Has usado fertilizantes constantemente en la zona de tierra?').
-historial_contaminacion_suelo(X) :- booleanask(historial_contaminacion_suelo, X, 
-  'El suelo ha tenido un historial de contaminacion o plagas persistentes? ').
+
+historial_contaminacion_suelo(X) :- menuask(historial_contaminacion_suelo, X, [1, 2, 3],
+  'El suelo ha tenido un historial de contaminacion o plagas persistentes?', [
+    '1. Si',
+    '2. No',
+    '3. No se'
+  ]).
 tipo_fertilizante(X) :- menuask(tipo_fertilizante, X, [1, 2, 3], 
   'Si deseas utilizar algun fertilizante, que tipo de fertilizantes consideras usar?', [
     '1. Organico',
     '2. Sintetico',
-    '3. Otro'
+    '3. No se'
   ]).
 profundidad_correcta_suelo(X) :- menuask(profundidad_correcta_suelo, X, [1, 2, 3], 
   'La profundidad del suelo te permite sembrar tu manzano al menos a 60cm de profundidad?', [
@@ -277,34 +290,34 @@ ph_suelo(X) :- menuask(ph_suelo, X, [1, 2, 3, 4], 'Reconoces si el tipo de suelo
   '1. Acido',
   '2. Neutro',
   '3. Alcalino',
-  '4. Desconocido, pero quiero conocerlo'
+  '4. No se, pero quiero conocerlo'
 ]).
 deteccion_ph_suelo(X) :- menuask(deteccion_ph_suelo, X, [1, 2, 3, 4], 
   'Suponiendo que no cuentas con instrumentos de medicion de pH (de ser asi, usalos y omite esto). Toma dos muestras del suelo para evitar alteraciones. En la primer muestra coloca jugo de limon, y si reacciona, es alcalino. En la segunda muestra coloca vinagre, y si reacciona, es acido. Ahora indica el tipo de suelo:', [
     '1. Acido',
     '2. Neutro',
     '3. Alcalino',
-    '4. No aplica'
+    '4. Sigo sin saber'
   ]).
 tratamientos_suelo_alcalino(X) :- menuask(tratamientos_suelo_alcalino, X, [1, 2, 3, 4], 
   'Para suelos alcalinos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
     '1. Aplicacion de azufre elemental',
     '2. Aplicacion de fertilizantes acidos',
     '3. Aplicacion de materia organica',
-    '4. Ninguno accesible'
+    '4. No se. Ninguno de los anteriores'
   ]).
 fertilizante_acido(X) :- menuask(fertilizante_acido, X, [1, 2, 3], 
   'Selecciona uno de los sig. fertilizantes a utilizar:', [
     '1. De sulfato de hierro',
     '2. De nitrato de amonio',
-    '3. Ninguno accesible'
+    '3. No se. Ninguno de los anteriores'
   ]).
 tratamientos_suelo_acido(X) :- menuask(tratamientos_suelo_acido, X, [1, 2, 3, 4], 
   'Para suelos acidos se recomienda aplicar alguna de las siguientes enmiendas (recuerda utilizar guantes, gafas y mascarilla para manipular polvos):', [
     '1. Uso de cal viva o cal apagada',
     '2. Uso de ceniza de lenia sana',
     '3. Uso de carbonato calcico',
-    '4. Ninguno accesible'
+    '4. No se. Ninguno de los anteriores'
   ]).
 
 % Flujos 
@@ -340,7 +353,7 @@ flujo_cuidado_suelo :-
 mensaje_solucion_adaptacion_al_suelo :-
   solucion_adaptacion_al_suelo(1),
   write('* CON RESPECTO A INFORMACION DE ADAPTACION AL SUELO: '), nl,
-  write('Si la raiz no se adapta al lugar de plantacion por, al menos, un mes, puedes correr el riesgo de quemar la raiz. No es un buen lugar para plantar'), nl, nl.
+  write('Si la raiz no se adapta al lugar de plantacion por, al menos, un mes, puedes correr el riesgo de quemar la raiz. No es un buen lugar para plantar si no puedes asegurar que haya pasado al menos un mes desde su transplantacion.'), nl, nl.
 mensaje_solucion_adaptacion_al_suelo :-
   !.  
 
@@ -498,16 +511,16 @@ mensaje_solucion_instrucciones_suelo :-
   !.  
 
 solucion_adaptacion_al_suelo(1) :-
-  tiempo_despues_de_transplantacion(no).
+  \+ tiempo_despues_de_transplantacion(1).
 solucion_adaptacion_al_suelo(0) :-
   !.
 
 solucion_accesible_sembrar(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_accesible_sembrar(1) :-
   uso_frecuente_fertilizantes(si),
-  historial_contaminacion_suelo(si).
+  historial_contaminacion_suelo(1).
 solucion_accesible_sembrar(1) :-
   uso_frecuente_fertilizantes(no),
   (tipo_fertilizante(1) ; tipo_fertilizante(2) ; tipo_fertilizante(3)),
@@ -519,7 +532,7 @@ solucion_accesible_sembrar(0) :-
   !.
 
 solucion_tipo_fertilizante(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_tipo_fertilizante(1) :- % organico
   tipo_fertilizante(1).
@@ -531,7 +544,7 @@ solucion_tipo_fertilizante(0) :-
   !.
 
 solucion_profundidad_suelo(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_profundidad_suelo(1) :-
   profundidad_correcta_suelo(3).
@@ -539,7 +552,7 @@ solucion_profundidad_suelo(0) :-
   !.
 
 solucion_drenaje_deficiente_suelo(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_drenaje_deficiente_suelo(1) :- 
   drenaje_deficiente_suelo(si),
@@ -551,7 +564,7 @@ solucion_drenaje_deficiente_suelo(0) :-
   !.
 
 solucion_caracteristicas_suelo(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_caracteristicas_suelo(1) :-
   tipo_suelo(3).
@@ -564,12 +577,12 @@ solucion_caracteristicas_suelo(0) :-
   !.
 
 solucion_ph_suelo(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_ph_suelo(1) :- % acido
-  tiempo_despues_de_transplantacion(si),
+  tiempo_despues_de_transplantacion(1),
   uso_frecuente_fertilizantes(si),
-  historial_contaminacion_suelo(no).
+  \+ historial_contaminacion_suelo(1).
 solucion_ph_suelo(1) :- % acido
   ph_suelo(1).
 solucion_ph_suelo(2) :- % neutro
@@ -589,7 +602,7 @@ solucion_ph_suelo(0) :-
   !.
 
 solucion_tratamiento_suelo_acido(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_tratamiento_suelo_acido(1) :-
   solucion_ph_suelo(1),
@@ -604,7 +617,7 @@ solucion_tratamiento_suelo_acido(0) :-
   !.
 
 solucion_tratamiento_suelo_alcalino(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_tratamiento_suelo_alcalino(3) :-
   solucion_ph_suelo(3),
@@ -624,7 +637,7 @@ solucion_tratamiento_suelo_alcalino(0) :-
   !.
 
 solucion_tratamiento_advertencias(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_tratamiento_advertencias(1) :-
   solucion_ph_suelo(1),
@@ -645,7 +658,7 @@ solucion_tratamiento_advertencias(0) :-
   !.
 
 solucion_instrucciones_suelo(0) :-
-  tiempo_despues_de_transplantacion(no),
+  \+ tiempo_despues_de_transplantacion(1),
   !.
 solucion_instrucciones_suelo(1) :-
   solucion_ph_suelo(1),

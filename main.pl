@@ -352,14 +352,14 @@ flujo_cuidado_suelo :-
 
 mensaje_solucion_adaptacion_al_suelo :-
   solucion_adaptacion_al_suelo(1),
-  write('* CON RESPECTO A INFORMACION DE ADAPTACION AL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE ADAPTACION AL SUELO: '), nl,
   write('Si la raiz no se adapta al lugar de plantacion por, al menos, un mes, puedes correr el riesgo de quemar la raiz. No es un buen lugar para plantar si no puedes asegurar que haya pasado al menos un mes desde su transplantacion.'), nl, nl.
 mensaje_solucion_adaptacion_al_suelo :-
   !.  
 
 mensaje_solucion_accesible_sembrar :-
   solucion_accesible_sembrar(1),
-  write('* CON RESPECTO A INFORMACION DE ACCESIBILIDAD A SEMBRAR: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE ACCESIBILIDAD A SEMBRAR: '), nl,
   write('No se recomienda sembrar en esta zona.'), nl, nl.
 mensaje_solucion_accesible_sembrar :-
   solucion_accesible_sembrar(2),
@@ -370,15 +370,15 @@ mensaje_solucion_accesible_sembrar :-
 
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(1),
-  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
   write('Continue con un plan de fertilizacion natural.'), nl, nl.
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(2),
-  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
   write('Asegurese de no exceder las dosis recomendadas.'), nl, nl.
 mensaje_solucion_tipo_fertilizante :-
   solucion_tipo_fertilizante(3),
-  write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE TIPO DE FERTILIZANTE: '), nl,
   write('Considere un plan combinado para maximizar beneficios.'), nl, nl.
 mensaje_solucion_tipo_fertilizante :-
   !.  
@@ -386,94 +386,94 @@ mensaje_solucion_tipo_fertilizante :-
 
 mensaje_solucion_profundidad_suelo :-
   solucion_profundidad_suelo(1),
-  write('* CON RESPECTO A INFORMACION DE PROFUNDIDAD DE SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE PROFUNDIDAD DE SUELO: '), nl,
   write('Se recomienda validar que la profundidad del suelo sea de al menos 60cm para no limitar el crecimiento de los manzanos.'), nl, nl.
 mensaje_solucion_profundidad_suelo :-
   !.  
 
 mensaje_solucion_drenaje_deficiente_suelo :-
   solucion_drenaje_deficiente_suelo(1),
-  write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
   write('No es recomendable plantar manzanos en la zona debido a que el drenaje deficiente podria causar asfixia a las raices y ocasionar pudricion.'), nl, nl.
 mensaje_solucion_drenaje_deficiente_suelo :-
   solucion_drenaje_deficiente_suelo(2),
-  write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE DEFICIENCIA DE DRENAJE DEL SUELO: '), nl,
   write('Recomendacion: Realizar trabajos de aireacion o drenaje.'), nl, nl.
 mensaje_solucion_drenaje_deficiente_suelo :-
   !.  
 
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(1),
-  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
   write('Suelo de drenaje rapido. Asegurese de una fertilizacion adecuada.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(2),
-  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
   write('Suelo pesado. Considere mejorar la aireacion.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   solucion_caracteristicas_suelo(3),
-  write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION DE CARACTERISTICAS DEL SUELO: '), nl,
   write('Es un suelo optimo.'), nl, nl.
 mensaje_solucion_caracteristicas_suelo :-
   !.  
 
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(1),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
   write('Es altamente probable que el suelo presente caracteristicas acidas.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(2),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
   write('Es altamente probable que el suelo presente caracteristicas neutras.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   solucion_ph_suelo(3),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL PH DEL SUELO: '), nl,
   write('Es altamente probable que el suelo presente caracteristicas alcalinas.'), nl, nl.
 mensaje_solucion_ph_suelo :-
   !.  
 
 mensaje_solucion_tratamiento_suelo_acido :-
   solucion_tratamiento_suelo_acido(1),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
   write('Para subir 1 unidad de pH se recomienda utilizar  entre 300 gr y 500 gr por m2 de cal viva o entre 200gr y 400gr por m2.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_acido :-
   solucion_tratamiento_suelo_acido(2),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
   write('Para subir 1 unidad de pH se recomienda utilizar  entre 100 gr y 200 gr por m2 de ceniza de lenia sana.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_acido :-
   solucion_tratamiento_suelo_acido(3),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ACIDO: '), nl,
   write('Para subir 1 unidad de pH se recomienda utilizar  entre 0.750 kg y 1.250 kg por m2.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_acido :-
   !.  
 
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(1),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
   write('Para bajar 1 unidad de pH se recomienda utilizar  entre 400 gr y 600 gr de sulfato de hierro por m2 y para diluir en agua de riego 4gr por litro.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(2),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
   write(' Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg de nitrato de amonio por m2 o para diluir en agua de riego 1kg por litro. Al finalizar riegue el area para ayudar a que el nitrato se integre en el suelo'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(3),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
   write('Se recomienda la aplicacion de estiercol compostado. Esta aplicacion es Ideal para suelos sueltos y con buen drenaje. Para bajar 1 unidad de pH se recomienda utilizar  entre 1 kg a 4kg por m2 de estiercol. Los diferentes tipos de estiercol tienen distintos niveles de nutrientes.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   solucion_tratamiento_suelo_alcalino(4),
-  write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA AL TRATAMIENTO DEL SUELO ALCALINO: '), nl,
   write('El uso de azufre elemental se considera mas lento que otros fertilizantes pero efectivo. Para bajar 1 unidad de pH se recomienda utilizar entre 0.5 kg y 1 kg por m2 de Azufre.'), nl, nl.
 mensaje_solucion_tratamiento_suelo_alcalino :-
   !.  
 
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(1),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- Adecuado para situaciones donde se requiere una accion rapida, pero debe aplicarse con precaucion para evitar sobrepasar el nivel de pH deseado.'), nl,
   write('- En caso de usar cal viva es importante no mezclar con agua, ya  que produce una reaccion exotermica y corrosiva.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(2),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- Ideal para suelos compactos.'), nl,
   write('- Actua mas rapido que el azufre pero persiste durante menos tiempo. '), nl,
   write('- Evite aplicar en dias calurosos o secos.'), nl,
@@ -481,30 +481,30 @@ mensaje_solucion_tratamiento_advertencias :-
   write('- Su uso excesivo puede llevar a la acumulacion de hierro.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(3),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- No es recomendable su uso en suelos arenosos ya que puede reducir la eficacia del fertilizante.'), nl,
   write('- Es posible que requieran aplicaciones repetidas'), nl,
   write('- A largo plazo puede llevar a desequilibrios nutricionales, ya que un pH elevado puede limitar la disponibilidad de otros nutrientes.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(4),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- Asegurese de que el estiercol se encuentra bien compostado para reducir riesgos de patogenos.'), nl,
   write('- No debe excederse la dosis ya que podria provocar problemas de sanidad o contaminacion.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   solucion_tratamiento_advertencias(5),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A ADVERTENCIAS CON EL TRATAMIENTO: '), nl,
   write('- De no manejarse adecuadamente la conductividad electrica del suelo puede aumentar debido al incremento de sales solubles.'), nl, nl.
 mensaje_solucion_tratamiento_advertencias :-
   !.  
 
 mensaje_solucion_instrucciones_suelo :-
   solucion_instrucciones_suelo(1),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
   write('- Introduce la cal en el suelo a una profundidad de 15 a 20 cm y mezcla.'), nl,
   write('- Advertencia: Recuerda que cualquier enmienda debe ser de forma escalonada y progresiva. Se recomienda verificar el pH del suelo cada 3 o 4 meses.'), nl, nl.
 mensaje_solucion_instrucciones_suelo :-
   solucion_instrucciones_suelo(2),
-  write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
+  nl, write('* CON RESPECTO A INFORMACION RELACIONADA A INSTRUCCIONES DE TRATAMIENTO: '), nl,
   write('- Introduce la cal en el suelo a una profundidad de 15 a 20 cm y mezcla.'), nl,
   write('- Advertencia: Recuerda que cualquier enmienda debe ser de forma escalonada y progresiva. Se recomienda verificar el pH del suelo cada 3 o 4 meses.'), nl, nl.
 mensaje_solucion_instrucciones_suelo :-
@@ -1256,7 +1256,11 @@ solucion_plaga_enfermedad(0) :-
 % --- Interfaz principal ---
 inicio :-
   nl,
-  write('Bienvenido al sistema experto para principiantes en manzanos!!'), nl,
+  write('Bienvenido al sistema experto destinado a ayudar a inexpertos en el cuidado de manzanos!'), nl,
+  write('El sistema aborda 4 flujos diferentes. Por cada uno de ellos, el sistema te hara preguntas para obtener la informacion necesaria y darte la retroalimentacion adecuada.'), nl,
+  write('Cuando el sistema tenga las respuestas del flujo, mostrara las retroalimentaciones necesarias basadas en lo que contestes.'), nl,
+  write('No te preocupes si no sabes la respuesta a alguna pregunta, tu informacion es igualmente util para el sistema. Sientete libre de contestar lo que sepas (y lo que no).'), nl,
+  write('El sistema guarda tus respuestas. Para volver a iniciar de cero, limpia la memoria seleccionando la opcion 5 del menu.'), nl,
   write('--- Acciones ---'), nl,
   write('Introduce un numero para:'), nl,
   write('1. Plantacion'), nl,
